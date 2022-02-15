@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/15 15:40:02 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:46:32 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,40 @@ void	set_tile_size(t_vars *vars)
 		vars->tile_size = MINIMAP_HEIGHT / vars->map.y * 2;
 }
 
+int	check_line(char **map, char *line, int index)
+{
+	int i;
+
+	i = 0;
+	if (index == 0)
+	{
+		while (line[i])
+		{
+			if (line[i] == ' ' && i < ft_strlen(map[index + 1]))
+				if (map[index + 1][i] != '1' || map[index + 1] != ' ')
+					return (1);
+			i++;
+		}
+	}
+	return (0);
+}
+
+void	map_check(t_vars *vars)
+{
+	char	**map;
+	int		i;
+	int		j;
+
+	map = vars->map.mapdata;
+	j = 0;
+	while (map[j])
+	{
+		if (check_line(map, map[j], j))
+			put_error("map error");
+		j++;
+	}
+}
+
 void	parse(char *filename, t_vars *vars)
 {
 	int skip_line;
@@ -265,5 +299,5 @@ void	parse(char *filename, t_vars *vars)
 	malloc_mapdata(vars);
 	set_map(skip_line, filename, vars);
 	parse_map(vars);
-//	print_map(vars);
+	map_check(vars);
 }

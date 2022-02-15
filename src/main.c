@@ -103,14 +103,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		put_error("How to use : ./cub3d *.ber");
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
-	vars.minimap.ptr = mlx_new_image(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	vars.minimap.data = mlx_get_data_addr(vars.minimap.ptr, &vars.minimap.bpp, &vars.minimap.size_line, &vars.minimap.endian);
 
 	parse(argv[1], &vars);
 	init_player(&vars);
-	draw(&vars);
 
+	vars.win = mlx_new_window(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
+	vars.minimap.ptr = mlx_new_image(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	vars.minimap.data = mlx_get_data_addr(vars.minimap.ptr, &vars.minimap.bpp, &vars.minimap.size_line, &vars.minimap.endian);
+	draw(&vars);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, keyrelease, &vars);
 	mlx_hook(vars.win, 17, 0, close_window, &vars);
