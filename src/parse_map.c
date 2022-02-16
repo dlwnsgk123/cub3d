@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/15 16:46:32 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:53:21 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ int	check_line(char **map, char *line, int index)
 		while (line[i])
 		{
 			if (line[i] == ' ' && i < ft_strlen(map[index + 1]))
-				if (map[index + 1][i] != '1' || map[index + 1] != ' ')
+				if (map[index + 1][i] != '1')
 					return (1);
 			i++;
 		}
