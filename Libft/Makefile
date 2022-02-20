@@ -43,6 +43,7 @@ SRCS = ft_memset.c \
 		ft_atol.c \
 		ft_strndup.c \
 		ft_strcmp.c \
+		ft_strtrim_back.c \
 		get_next_line.c \
 
 CC		= gcc

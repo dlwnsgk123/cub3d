@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/20 17:16:53 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:39:45 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,21 @@ typedef struct s_vars
 
 void	put_error(char *str);
 void	parse(char *filename, t_vars *vars);
+void 	map_wall_check(t_vars *vars);
+void	parse_map(t_vars *vars);
+void	malloc_mapdata(t_vars *vars);
+void	set_tile_size(t_vars *vars);
+void	get_map_x_y(int skip_line, char *filename, t_vars *vars);
+
+int		tmp_len(char **tmp);
+void	check_extension(char *filename);
+void 	split_free(char **str);
+
 void	set_map(int skip_line, char *filename, t_vars *vars);
 void 	get_map_x_y(int skip_line, char *filename, t_vars *vars);
+
 void 	draw_minimap(t_vars *vars, int width, int height);
 void 	draw_player(t_vars *vars);
-void 	img_set(t_vars *vars, t_img *img, char *path, int type);
-void	img_init(t_vars *vars);
-
 
 int		keyrelease(int keycode, t_vars *vars);
 int		keypress(int keycode, t_vars *vars);
@@ -112,8 +120,7 @@ void 	rotate_right(t_vars *vars);
 int		is_wall(t_vars *vars, float new_px, float new_py);
 int		check_edge(t_vars *vars, int new_mapx, int new_mapy);
 
-void 	check_map_size(t_vars *vars);
-void	draw_screen(t_vars *vars, t_img *img, int x, int y);
+
 int		close_window(void);
 void	draw(t_vars *vars);
 

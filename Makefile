@@ -14,8 +14,13 @@ NAME = cub3d
 
 SRCS =  src/main.c \
 		src/parse.c \
+		src/parse2.c \
+		src/parse3.c \
+		src/parse4.c \
+		src/parse_util.c \
 		src/error.c \
-		src/draw_map.c \
+		src/draw.c \
+		src/draw2.c \
 		src/move_player.c \
 		src/move_player2.c \
 
@@ -52,13 +57,13 @@ $(NAME) : $(OBJ)
 all : $(NAME)
 
 clean:
-#	$(MAKE) -s -C ./Libft clean
-#	$(MAKE) -s -C $(MLX) clean
+	$(MAKE) -s -C ./Libft clean
+	$(MAKE) -s -C $(MLX) clean
 	rm -rf $(OBJ)
 
 fclean:
-#	$(MAKE) -C ./Libft fclean
-#	$(MAKE) -C $(MLX) clean
+	$(MAKE) -C ./Libft fclean
+	$(MAKE) -C $(MLX) clean
 	rm -rf $(OBJ) $(NAME)
 
 re: fclean all

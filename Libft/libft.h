@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 00:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/01/20 01:36:16 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:17:45 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void			ft_putnbr_fd(int n, int fd);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char			*ft_strtrim(char const *s1, char const *set);
+char			*ft_strtrim_back(char *s1, char *set);
 char			**ft_split(char const *s, char c);
 t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **lst, t_list *newlst);
