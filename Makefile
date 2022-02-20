@@ -13,10 +13,11 @@
 NAME = cub3d
 
 SRCS =  src/main.c \
-		src/parse_map.c \
+		src/parse.c \
 		src/error.c \
 		src/draw_map.c \
 		src/move_player.c \
+		src/move_player2.c \
 
 CC = gcc
 
