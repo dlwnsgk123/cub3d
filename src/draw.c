@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:20 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 21:52:48 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 22:06:51 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	draw_line(t_vars *vars, t_p start, t_p end)
 				y += Yfactor;
 				f += 2 * (h - w);
 			}
-			draw_pixel(&vars->screen, x, y, 0x00FF00);
+			vars->screen.data[x + y * vars->screen.size_line / 4] = 0x0000FF;
 		}
 	}
 	else
@@ -80,7 +80,7 @@ void	draw_line(t_vars *vars, t_p start, t_p end)
 				x += Xfactor;
 				f += 2 * (w - h);
 			}
-			draw_pixel(&vars->screen, x, y, 0x00FF00);
+			vars->screen.data[x + y * vars->screen.size_line / 4] = 0x0000FF;
 		}
 	}
 }
