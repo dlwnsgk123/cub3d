@@ -26,7 +26,7 @@ SRCS =  src/main.c \
 
 CC = gcc
 
-CFLAGS = -fsanitize=address
+CFLAGS =
 
 LEAKFLAGS = 
 

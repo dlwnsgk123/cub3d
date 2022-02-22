@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:20 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 17:41:03 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 21:52:48 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 unsigned int	get_pixel_color(t_img *img, int x, int y)
 {
 	return (*(unsigned int *)
-		(img->data + (x * img->bpp / 8 + y * img->size_line)));
+		(img->data + (x * img->bpp / 4 + y * img->size_line)));
 }
 
 void	draw_pixel(t_img *img, int x, int y, int color)
 {
-	char			*pixel;
-
-	pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
-	*(unsigned int *)pixel = color;
+	img->data[x + y * img->size_line / 4] = color;
 }
 
 void	draw_square(t_vars *vars, t_p p, int width, int color)
@@ -103,7 +100,7 @@ void	draw_player(t_vars *vars)
 	draw_line(vars, start, end);
 }
 
-void	draw_minimap(t_vars *vars, int width, int height)
+void	draw_minimap(t_vars *vars)
 {
 	int		x;
 	int		y;

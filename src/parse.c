@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 00:43:51 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 21:46:32 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_img(t_img *img, t_vars *vars, char *path)
 							&img->width, &img->height);
 	if (img->ptr == NULL)
 		put_error("img path error");
-	img->data = mlx_get_data_addr(img->ptr, &img->bpp, \
+	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bpp, \
 							&img->size_line, &img->endian);
 }
 

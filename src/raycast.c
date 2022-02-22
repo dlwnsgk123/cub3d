@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 18:44:45 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 21:24:56 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,34 @@ static double camera_angle(double ra, double pa)
 	return (ca);
 }
 
-/*
-double	distance(float px,float py, t_point dir)
+
+double	distance(float x1,float x2, float y1, float y2)
 {
-	return (sqrt((dir.x - pos.x) * (dir.x - pos.x) +
-			(dir.y - pos.y) * (dir.y - pos.y)));
+	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
-*/
+
+
+
+void	draw_wall(t_vars *vars, t_ray ray, double dist)
+{
+	int	i;
+	int	j;
+	int	wall_height;
+	
+	i = 0;
+	j = 0;
+	wall_height = WINDOW_WIDTH / dist;
+	while (i < WINDOW_WIDTH)
+	{
+		j = 0;
+		while (j < wall_height)
+		{
+			draw_pixel(&vars->screen,i, j, 0XFF0000);
+			j++;
+		}
+		i++;
+	}
+}
 
 void	ray_draw(t_vars *data)
 {
@@ -189,13 +210,13 @@ void	ray_draw(t_vars *data)
 	pa = data->player.pa;
 	i = 0;
     ra = pa - (FOV_ANGLE / 2.0);
-	while (i < 60)
+	while (i < WINDOW_WIDTH)
 	{
 		ca = camera_angle(ra, pa);
 		hit_ray(&data->ray, data, ra);
 		data->ray.s_dir.x = data->ray.m_dir.x * data->tile_size;
 		data->ray.s_dir.y = data->ray.m_dir.y * data->tile_size;
-//		dist = distance(data->player.mp, data->ray.m_dir) * cos(ca);
+		dist = distance(data->player.px, data->ray.m_dir.x, data->player.py, data->ray.m_dir.y) * cos(ca);
 		if (dist <= 1)
 			dist = 1;
 		start.x = data->player.px;
@@ -203,8 +224,8 @@ void	ray_draw(t_vars *data)
 		end.x = data->ray.s_dir.x;
 		end.y = data->ray.s_dir.y;
 		draw_line(data, start, end);
-		//hit_ray_draw(data, dist, i);
-        ra += FOV_ANGLE / 60;
+	//	draw_wall(data, data->ray, dist);
+        ra += FOV_ANGLE / (WINDOW_WIDTH);
 		i++;
 	}
 }

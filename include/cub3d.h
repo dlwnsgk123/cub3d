@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 18:44:33 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 21:45:42 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_ray
 typedef struct s_img
 {
 	void	*ptr;
-	char	*data;
+	int		*data;
 	int		width;
 	int		height;
 	int		endian;
@@ -137,7 +137,7 @@ void 	split_free(char **str);
 void	set_map(int skip_line, char *filename, t_vars *vars);
 void 	get_map_x_y(int skip_line, char *filename, t_vars *vars);
 
-void 	draw_minimap(t_vars *vars, int width, int height);
+void 	draw_minimap(t_vars *vars);
 void 	draw_player(t_vars *vars);
 
 int		keyrelease(int keycode, t_vars *vars);
@@ -158,5 +158,5 @@ void	draw(t_vars *vars);
 void	draw_image_test(t_vars *vars);
 void	ray_draw(t_vars *data);
 void	draw_line(t_vars *vars, t_p start, t_p end);
-
+void	draw_pixel(t_img *img, int x, int y, int color);
 #endif
