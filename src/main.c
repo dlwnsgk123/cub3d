@@ -22,6 +22,7 @@ void	draw(t_vars *vars)
 {
 	draw_minimap(vars, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	draw_player(vars);
+//	draw_image_test(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->screen.ptr, 0, 0);
 }
 

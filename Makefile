@@ -20,7 +20,6 @@ SRCS =  src/main.c \
 		src/parse_util.c \
 		src/error.c \
 		src/draw.c \
-		src/draw2.c \
 		src/move_player.c \
 		src/move_player2.c \
 

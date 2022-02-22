@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 00:39:45 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:05:50 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
-# define MINIMAP_WIDTH WINDOW_WIDTH
-# define MINIMAP_HEIGHT WINDOW_HEIGHT
-# define PI		3.14159265358979323846	
-# define PI_2	1.57079632679489661923
-# define PI_4	0.78539816339744830962
+# define WINDOW_WIDTH	1280
+# define WINDOW_HEIGHT	720
+# define MINIMAP_WIDTH	WINDOW_WIDTH
+# define MINIMAP_HEIGHT	WINDOW_HEIGHT
+# define FOV_ANGLE		1.0471975512
+# define PI				3.14159265358979323846	
+# define PI_2			1.57079632679489661923
+# define PI_4			0.78539816339744830962
 
 typedef struct s_player
 {
@@ -123,5 +124,7 @@ int		check_edge(t_vars *vars, int new_mapx, int new_mapy);
 
 int		close_window(void);
 void	draw(t_vars *vars);
+
+void draw_image_test(t_vars *vars);
 
 #endif
