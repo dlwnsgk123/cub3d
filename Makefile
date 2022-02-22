@@ -22,6 +22,7 @@ SRCS =  src/main.c \
 		src/draw.c \
 		src/move_player.c \
 		src/move_player2.c \
+		src/raycast.c \
 
 CC = gcc
 
@@ -35,7 +36,7 @@ OS = $(shell uname -s)
 
 ifeq ($(OS), Darwin)
 	MLX = ./mlx
-	HEADER = ./includes/
+	HEADER = ./include/
 	MLX_LINK = -L $(MLX) -lmlx -framework OpenGL -framework AppKit
 else
 	MLX = ./mlx-linux

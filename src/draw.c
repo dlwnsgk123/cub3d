@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:20 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 20:16:18 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:41:03 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,6 @@ void	draw_line(t_vars *vars, t_p start, t_p end)
 			draw_pixel(&vars->screen, x, y, 0x00FF00);
 		}
 	}
-}
-
-void	draw_ray(t_vars *vars, int x1, int y1, int x2, int y2)
-{
-
 }
 
 void	draw_player(t_vars *vars)

@@ -21,26 +21,43 @@ int	close_window(void)
 void	draw(t_vars *vars)
 {
 	draw_minimap(vars, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-	draw_player(vars);
-//	draw_image_test(vars);
+//	draw_player(vars);
+	ray_draw(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->screen.ptr, 0, 0);
 }
 
 int	main_loop(t_vars *vars)
 {
 	if (vars->key.w == 1)
+	{	
+		draw(vars);
 		move_up(vars);
+	}
 	if (vars->key.a == 1)
+	{
+		draw(vars);
 		move_left(vars);
+	}
 	if (vars->key.s == 1)
+	{
+		draw(vars);
 		move_down(vars);
+	}
 	if (vars->key.d == 1)
+	{
+		draw(vars);
 		move_right(vars);
+	}
 	if (vars->key.l == 1)
+	{
+		draw(vars);
 		rotate_left(vars);
+	}
 	if (vars->key.r == 1)
+	{
+		draw(vars);
 		rotate_right(vars);
-	draw(vars);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 20:05:50 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:44:33 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 # include <math.h>
 # include "../Libft/libft.h"
 
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_ESC 65307
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_ESC 53
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
 # define MINIMAP_WIDTH	WINDOW_WIDTH
@@ -67,6 +67,35 @@ typedef struct s_p
 	int	y;
 }				t_p;
 
+typedef struct s_mpl
+{
+	double	dy;
+	double	ddy;
+	double	dx;
+	double	ddx;
+	double	dv;
+	double	incx;
+	double	incy;
+	double	error;
+	double	errorprev;
+}	t_mpl;
+
+typedef struct s_point
+{
+	double	x;
+	double	y;
+}	t_point;
+
+typedef struct s_ray
+{
+	t_mpl	v;
+	t_point	pos;	//플레이어가 바라보는 방향
+	t_point	s_dir;	//scale이 적용된 hit 위치
+	t_point m_dir;	//벽에 hit한 위치
+	t_point	prev_dir;
+	int	hit;		//hit한 방향 4:N, 3:S, 2:E, 1:W
+}	t_ray;
+
 typedef struct s_img
 {
 	void	*ptr;
@@ -82,6 +111,7 @@ typedef struct s_vars
 {
 	void		*mlx;
 	void		*win;
+	t_ray		ray;
 	t_key 		key;
 	t_img 		screen;
 	t_img		texture[4];
@@ -125,6 +155,8 @@ int		check_edge(t_vars *vars, int new_mapx, int new_mapy);
 int		close_window(void);
 void	draw(t_vars *vars);
 
-void draw_image_test(t_vars *vars);
+void	draw_image_test(t_vars *vars);
+void	ray_draw(t_vars *data);
+void	draw_line(t_vars *vars, t_p start, t_p end);
 
 #endif

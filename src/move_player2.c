@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:55:30 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/20 16:55:43 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:19:11 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	keyrelease(int keycode, t_vars *vars)
 
 void	rotate_left(t_vars *vars)
 {
-	vars->player.pa -= 0.01;
+	vars->player.pa -= 0.02;
 	if (vars->player.pa < 0)
 		vars->player.pa += 2 * PI;
 	vars->player.pdx = cos(vars->player.pa) * (vars->tile_size / 2);
@@ -59,7 +59,7 @@ void	rotate_left(t_vars *vars)
 
 void	rotate_right(t_vars *vars)
 {
-	vars->player.pa += 0.01;
+	vars->player.pa += 0.02;
 	if (vars->player.pa > 2 * PI)
 		vars->player.pa -= 2 * PI;
 	vars->player.pdx = cos(vars->player.pa) * (vars->tile_size / 2);
