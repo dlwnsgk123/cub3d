@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 13:41:47 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:50:26 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_x_major(t_ray *r, t_point mp, t_map map)
 				{
 					r->hit.x = mp.x;
 					r->hit.y = mp.y - r->v.incy;
-					break ;
+					break;
 				}
 			}
 			else if (r->v.error + r->v.errorprev > r->v.ddx)
@@ -142,6 +142,8 @@ static void	hit_ray(t_ray *r, t_vars *data, double ray_angle)
 {
 	t_point	next;
 	t_point player;
+	int x;
+	int y;
 
 	player.x = data->player.px / data->tile_size;
 	player.y = data->player.py / data->tile_size;
@@ -149,11 +151,11 @@ static void	hit_ray(t_ray *r, t_vars *data, double ray_angle)
 	next.y = sin(ray_angle);
 	variable_set(&r->v, next);
 	r->wall_hit = 0;
+	r->is_v = 0;
 	if (r->v.ddx > r->v.ddy)
 		ft_x_major(r, player, data->map);
 	else
 		ft_y_major(r, player, data->map);
-	//r->hit = hit_direction(r->hit);
 }
 
 static double camera_angle(double ra, double pa)
@@ -209,7 +211,10 @@ void draw_wall(t_vars *vars, t_ray ray, double dist, int x)
 		{
 			if (dist <= 10)
 			{
-					vars->screen.data[((h + drawStart) * y) + sw] = blue;
+					if (ray.is_v == 1)
+						vars->screen.data[((h + drawStart) * y) + sw] = green;
+					else
+						vars->screen.data[((h + drawStart) * y) + sw] = blue;
 			}
 			sw++;
 		}

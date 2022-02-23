@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 13:28:13 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:59:14 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ typedef struct s_ray
 	t_point	pos;
 	t_point	hit;
 	t_point	prev_dir;
-	int		wall_hit;		//hit한 방향 4:N, 3:S, 2:E, 1:W
+	int 	is_v;
+	int 	wall_hit; // hit한 방향 4:N, 3:S, 2:E, 1:W
 }	t_ray;
 
 typedef struct s_img

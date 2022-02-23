@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:55:30 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 12:01:04 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:43:59 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	move_right(t_vars *vars)
 	float	new_x;
 	float	new_y;
 
-	new_x = vars->player.px - sin(vars->player.pa) * vars->tile_size * 0.01;
-	new_y = vars->player.py + cos(vars->player.pa) * vars->tile_size * 0.01;
+	new_x = vars->player.px - sin(vars->player.pa) * vars->tile_size * 0.05;
+	new_y = vars->player.py + cos(vars->player.pa) * vars->tile_size * 0.05;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;

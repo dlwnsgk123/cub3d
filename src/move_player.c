@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:52:22 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 18:43:30 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:44:13 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	move_up(t_vars *vars)
 	float	new_x;
 	float	new_y;
 
-	new_x = vars->player.px + cos(vars->player.pa) * vars->tile_size * 0.01;
-	new_y = vars->player.py + sin(vars->player.pa) * vars->tile_size * 0.01;
+	new_x = vars->player.px + cos(vars->player.pa) * vars->tile_size * 0.05;
+	new_y = vars->player.py + sin(vars->player.pa) * vars->tile_size * 0.05;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;
@@ -65,8 +65,8 @@ void	move_down(t_vars *vars)
 	float	new_x;
 	float	new_y;
 
-	new_x = vars->player.px - cos(vars->player.pa) * vars->tile_size * 0.01;
-	new_y = vars->player.py - sin(vars->player.pa) * vars->tile_size * 0.01;
+	new_x = vars->player.px - cos(vars->player.pa) * vars->tile_size * 0.05;
+	new_y = vars->player.py - sin(vars->player.pa) * vars->tile_size * 0.05;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;
@@ -79,8 +79,8 @@ void	move_left(t_vars *vars)
 	float	new_x;
 	float	new_y;
 
-	new_x = vars->player.px + sin(vars->player.pa) * vars->tile_size * 0.01;
-	new_y = vars->player.py - cos(vars->player.pa) * vars->tile_size * 0.01;
+	new_x = vars->player.px + sin(vars->player.pa) * vars->tile_size * 0.05;
+	new_y = vars->player.py - cos(vars->player.pa) * vars->tile_size * 0.05;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;
