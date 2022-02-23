@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 21:24:56 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:41:47 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	ft_x_major(t_ray *r, t_point mp, t_map map)
 			{
 				if(map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')
 				{
-					r->m_dir.x = mp.x;
-					r->m_dir.y = mp.y - r->v.incy;
+					r->hit.x = mp.x;
+					r->hit.y = mp.y - r->v.incy;
 					break ;
 				}
 			}
@@ -61,8 +61,8 @@ static void	ft_x_major(t_ray *r, t_point mp, t_map map)
 			{
 				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1')
 				{
-					r->m_dir.x = mp.x - r->v.incx;
-					r->m_dir.y = mp.y;
+					r->hit.x = mp.x - r->v.incx;
+					r->hit.y = mp.y;
 					break ;
 				}
 			}
@@ -71,16 +71,16 @@ static void	ft_x_major(t_ray *r, t_point mp, t_map map)
 				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1' &&
 					map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')
 				{
-					r->m_dir.x = mp.x - r->v.incx;
-					r->m_dir.y = mp.y - r->v.incy;
+					r->hit.x = mp.x - r->v.incx;
+					r->hit.y = mp.y - r->v.incy;
 					break ;
 				}
 			}
 		}
 		if (map.mapdata[(int)mp.y][(int)mp.x] == '1')
 		{
-			r->m_dir.x = mp.x;
-			r->m_dir.y = mp.y;
+			r->hit.x = mp.x;
+			r->hit.y = mp.y;
 			break ;
 		}
 		r->v.errorprev = r->v.error;
@@ -103,8 +103,8 @@ static void	ft_y_major(t_ray *r, t_point mp, t_map map)
 			{
 				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1')	// x
 				{
-					r->m_dir.x = mp.x - r->v.incx;
-					r->m_dir.y = mp.y;
+					r->hit.x = mp.x - r->v.incx;
+					r->hit.y = mp.y;
 					break ;
 				}
 			}
@@ -112,8 +112,8 @@ static void	ft_y_major(t_ray *r, t_point mp, t_map map)
 			{
 				if (map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')	// y
 				{
-					r->m_dir.x = mp.x;
-					r->m_dir.y = mp.y - r->v.incy;
+					r->hit.x = mp.x;
+					r->hit.y = mp.y - r->v.incy;
 					break ;
 				}
 			}
@@ -122,16 +122,16 @@ static void	ft_y_major(t_ray *r, t_point mp, t_map map)
 				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1' &&
 					map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')	//양옆에 막혀있을 때
 				{
-					r->m_dir.x = mp.x - r->v.incx;
-					r->m_dir.y = mp.y - r->v.incy;
+					r->hit.x = mp.x - r->v.incx;
+					r->hit.y = mp.y - r->v.incy;
 					break ;
 				}
 			}
 		}
 		if (map.mapdata[(int)mp.y][(int)mp.x] == '1')
 		{
-			r->m_dir.x = mp.x;
-			r->m_dir.y = mp.y;
+			r->hit.x = mp.x;
+			r->hit.y = mp.y;
 			break ;
 		}
 		r->v.errorprev = r->v.error;
@@ -148,12 +148,12 @@ static void	hit_ray(t_ray *r, t_vars *data, double ray_angle)
 	next.x = cos(ray_angle);
 	next.y = sin(ray_angle);
 	variable_set(&r->v, next);
-	r->hit = 0;
+	r->wall_hit = 0;
 	if (r->v.ddx > r->v.ddy)
 		ft_x_major(r, player, data->map);
 	else
 		ft_y_major(r, player, data->map);
-	//r->hit = hit_direction(r->m_dir);
+	//r->hit = hit_direction(r->hit);
 }
 
 static double camera_angle(double ra, double pa)
@@ -162,9 +162,9 @@ static double camera_angle(double ra, double pa)
 
 	ca = pa - ra;
 	if (ca < 0)
-		ca += (2 * M_PI);
-	if (ca > (2 * M_PI))
-		ca -= (2 * M_PI);
+		ca += (2 * PI);
+	if (ca > (2 * PI))
+		ca -= (2 * PI);
 	return (ca);
 }
 
@@ -174,26 +174,46 @@ double	distance(float x1,float x2, float y1, float y2)
 	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-
-
-void	draw_wall(t_vars *vars, t_ray ray, double dist)
+void draw_wall(t_vars *vars, t_ray ray, double dist, int x)
 {
-	int	i;
-	int	j;
-	int	wall_height;
-	
-	i = 0;
-	j = 0;
-	wall_height = WINDOW_WIDTH / dist;
-	while (i < WINDOW_WIDTH)
+	int	width;
+	int	height;
+	int	drawStart;
+	int	drawEnd;
+	float lineH;
+
+	width = 1;
+	height = WINDOW_HEIGHT;
+	lineH =  DIST_PROJ_PLANE / dist;
+	if (lineH > height)
+		lineH = height;
+	drawStart = -(lineH / 2) + (height / 2);
+	if (drawStart < 0)
+		drawStart = 0;
+	drawEnd = (lineH / 2) + (height / 2);
+	if (drawEnd >= height)
+		drawEnd = height - 1;
+
+	int	h;
+	int	sw, ew;
+	int	y = vars->screen.size_line;
+	int	green = 0x00CD00;
+	int	blue = 0x0000CD;
+
+	h = 0;
+	while (h + drawStart < drawEnd)
 	{
-		j = 0;
-		while (j < wall_height)
+		sw = x * width;
+		ew = sw + width;
+		while (sw <= ew)
 		{
-			draw_pixel(&vars->screen,i, j, 0XFF0000);
-			j++;
+			if (dist <= 10)
+			{
+					vars->screen.data[((h + drawStart) * y) + sw] = blue;
+			}
+			sw++;
 		}
-		i++;
+		h++;
 	}
 }
 
@@ -214,18 +234,16 @@ void	ray_draw(t_vars *data)
 	{
 		ca = camera_angle(ra, pa);
 		hit_ray(&data->ray, data, ra);
-		data->ray.s_dir.x = data->ray.m_dir.x * data->tile_size;
-		data->ray.s_dir.y = data->ray.m_dir.y * data->tile_size;
-		dist = distance(data->player.px, data->ray.m_dir.x, data->player.py, data->ray.m_dir.y) * cos(ca);
+		dist = distance(data->player.px, data->ray.hit.x * data->tile_size, data->player.py, data->ray.hit.y * data->tile_size) * cos(ca) / data->tile_size;
 		if (dist <= 1)
 			dist = 1;
 		start.x = data->player.px;
 		start.y = data->player.py;
-		end.x = data->ray.s_dir.x;
-		end.y = data->ray.s_dir.y;
-		draw_line(data, start, end);
-	//	draw_wall(data, data->ray, dist);
-        ra += FOV_ANGLE / (WINDOW_WIDTH);
+		end.x = data->ray.hit.x * data->tile_size;
+		end.y = data->ray.hit.y * data->tile_size;
+	//	draw_line(data, start, end);
+		draw_wall(data, data->ray, dist, i);
+        ra += FOV_ANGLE / WINDOW_WIDTH;
 		i++;
 	}
 }

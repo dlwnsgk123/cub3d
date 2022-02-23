@@ -12,6 +12,25 @@
 
 #include "cub3d.h"
 
+static void	draw_f_c(t_vars *data)
+{
+	int	i, j;
+	int	y = data->screen.size_line;
+
+	i = 0;
+	while (i < WINDOW_HEIGHT)
+	{
+		j = 0;
+		while (j < WINDOW_WIDTH)
+		{
+			data->screen.data[(i * y) + j] = data->c_color;
+			data->screen.data[((WINDOW_HEIGHT - i - 1) * y) + j] = data->f_color;
+			j++;
+		}
+		i++;
+	}
+}
+
 int	close_window(void)
 {
 	exit(0);
@@ -20,11 +39,11 @@ int	close_window(void)
 
 void	draw(t_vars *vars)
 {
-	draw_minimap(vars);
-	draw_player(vars);
+//	draw_player(vars);
+	draw_f_c(vars);
+//	draw_minimap(vars);
 	ray_draw(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->screen.ptr, 0, 0);
-	printf("hi!\n");
 }
 
 int	main_loop(t_vars *vars)
@@ -72,6 +91,7 @@ int	main(int argc, char **argv)
 	vars.screen.ptr = mlx_new_image(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	vars.screen.data = (int *)mlx_get_data_addr(vars.screen.ptr, &vars.screen.bpp, \
 								&vars.screen.size_line, &vars.screen.endian);
+	vars.screen.size_line = vars.screen.size_line / 4;
 	draw(&vars);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, keyrelease, &vars);

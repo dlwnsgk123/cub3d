@@ -26,7 +26,7 @@ SRCS =  src/main.c \
 
 CC = gcc
 
-CFLAGS =
+CFLAGS = #-fsanitize=address
 
 LEAKFLAGS = 
 
@@ -40,7 +40,7 @@ ifeq ($(OS), Darwin)
 	MLX_LINK = -L $(MLX) -lmlx -framework OpenGL -framework AppKit
 else
 	MLX = ./mlx-linux
-	HEADER = ./includes_linux/
+	HEADER = ./include-linux/
 	MLX_LINK = -L $(MLX) -lmlx -lm -lXext -lX11
 endif
 

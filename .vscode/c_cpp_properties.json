@@ -7,7 +7,8 @@
                 "${workspaceFolder}/src",
                 "${workspaceFolder}/includes",
                 "${workspaceFolder}/includes_linux",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include-linux"
             ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",

@@ -6,31 +6,28 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:20 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 22:06:51 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 01:28:48 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-unsigned int	get_pixel_color(t_img *img, int x, int y)
-{
-	return (*(unsigned int *)
-		(img->data + (x * img->bpp / 4 + y * img->size_line)));
-}
-
 void	draw_pixel(t_img *img, int x, int y, int color)
 {
-	img->data[x + y * img->size_line / 4] = color;
+	img->data[x + y * img->size_line] = color;
 }
 
-void	draw_square(t_vars *vars, t_p p, int width, int color)
+void	draw_square(t_vars *vars, t_p p, t_p p2, int color)
 {
-	int i;
-	int j;
+	int		i;
+	int 	j;
+	int 	width;
+	int 	height;
 
 	i = 0;
-	j = 0;
-	while (i < width)
+	width = p2.x - p.x;
+	height = p2.y - p.y;
+	while (i < height)
 	{
 		j = 0;
 		while (j < width)
@@ -65,7 +62,7 @@ void	draw_line(t_vars *vars, t_p start, t_p end)
 				y += Yfactor;
 				f += 2 * (h - w);
 			}
-			vars->screen.data[x + y * vars->screen.size_line / 4] = 0x0000FF;
+			vars->screen.data[x + y * vars->screen.size_line] = 0x0000FF;
 		}
 	}
 	else
@@ -80,7 +77,7 @@ void	draw_line(t_vars *vars, t_p start, t_p end)
 				x += Xfactor;
 				f += 2 * (w - h);
 			}
-			vars->screen.data[x + y * vars->screen.size_line / 4] = 0x0000FF;
+			vars->screen.data[x + y * vars->screen.size_line] = 0x0000FF;
 		}
 	}
 }
@@ -94,9 +91,6 @@ void	draw_player(t_vars *vars)
 	start.y = vars->player.py;
 	end.x = vars->player.px + vars->player.pdx;
 	end.y = vars->player.py + vars->player.pdy;
-	draw_square(vars,
-				start,
-				1, 0xFFFFFF);
 	draw_line(vars, start, end);
 }
 
@@ -105,6 +99,7 @@ void	draw_minimap(t_vars *vars)
 	int		x;
 	int		y;
 	t_p		p;
+	t_p		p2;
 
 	y = 0;
 	while (vars->map.mapdata[y])
@@ -114,15 +109,12 @@ void	draw_minimap(t_vars *vars)
 		{
 			p.x = x * vars->tile_size;
 			p.y = y * vars->tile_size;
+			p2.x = p.x + vars->tile_size;
+			p2.y = p.y + vars->tile_size;
 			if (vars->map.mapdata[y][x] == '1')
-				draw_square(vars, p, vars->tile_size, 0xbfbfbf);
+				draw_square(vars, p, p2, 0xbfbfbf);
 			else
-				draw_square(vars, p, vars->tile_size, 0x000000);
-			x++;
-		}
-		while (x < vars->map.x)
-		{
-			draw_square(vars, p, vars->tile_size, 0x000000);
+				draw_square(vars, p, p2, 0x000000);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:11:38 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 00:47:06 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:32:36 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	parse_map(t_vars *vars)
 void	set_tile_size(t_vars *vars)
 {
 	if (MINIMAP_WIDTH / vars->map.x < MINIMAP_HEIGHT / vars->map.y)
-		vars->tile_size = MINIMAP_WIDTH / vars->map.x;
+		vars->tile_size = 64;
 	else
-		vars->tile_size = MINIMAP_HEIGHT / vars->map.y;
+		vars->tile_size = 64;
 }

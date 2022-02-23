@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/22 18:57:09 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:28:13 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@
 # define KEY_S 115
 # define KEY_D 100
 # define KEY_ESC 65307
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
 # define MINIMAP_WIDTH	WINDOW_WIDTH
 # define MINIMAP_HEIGHT	WINDOW_HEIGHT
 # define FOV_ANGLE		1.0471975512
+# define DIST_PROJ_PLANE ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2))
 # define PI				3.14159265358979323846	
 # define PI_2			1.57079632679489661923
 # define PI_4			0.78539816339744830962
@@ -89,17 +90,16 @@ typedef struct s_point
 typedef struct s_ray
 {
 	t_mpl	v;
-	t_point	pos;	//플레이어가 바라보는 방향
-	t_point	s_dir;	//scale이 적용된 hit 위치
-	t_point m_dir;	//벽에 hit한 위치
+	t_point	pos;
+	t_point	hit;
 	t_point	prev_dir;
-	int	hit;		//hit한 방향 4:N, 3:S, 2:E, 1:W
+	int		wall_hit;		//hit한 방향 4:N, 3:S, 2:E, 1:W
 }	t_ray;
 
 typedef struct s_img
 {
 	void	*ptr;
-	char	*data;
+	int		*data;
 	int		width;
 	int		height;
 	int		endian;
@@ -117,7 +117,7 @@ typedef struct s_vars
 	t_img		texture[4];
 	int 		f_color;
 	int 		c_color;
-	t_map		 map;
+	t_map		map;
 	t_player	player;
 	int 		tile_size;
 } 				t_vars;
@@ -137,7 +137,7 @@ void 	split_free(char **str);
 void	set_map(int skip_line, char *filename, t_vars *vars);
 void 	get_map_x_y(int skip_line, char *filename, t_vars *vars);
 
-void 	draw_minimap(t_vars *vars, int width, int height);
+void 	draw_minimap(t_vars *vars);
 void 	draw_player(t_vars *vars);
 
 int		keyrelease(int keycode, t_vars *vars);
@@ -158,5 +158,6 @@ void	draw(t_vars *vars);
 void	draw_image_test(t_vars *vars);
 void	ray_draw(t_vars *data);
 void	draw_line(t_vars *vars, t_p start, t_p end);
+void	draw_pixel(t_img *img, int x, int y, int color);
 
 #endif
