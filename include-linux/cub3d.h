@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/24 11:09:28 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:24:41 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@
 # include "../Libft/libft.h"
 # include <stdbool.h>
 
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_ESC 65307
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define WINDOW_WIDTH	1920
-# define WINDOW_HEIGHT	1080
-# define MINIMAP_WIDTH	WINDOW_WIDTH
-# define MINIMAP_HEIGHT	WINDOW_HEIGHT
-# define FOV_ANGLE		1.0471975512
-# define DIST_PROJ_PLANE ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2))
-# define PI				3.14159265358979323846	
-# define PI_2			1.57079632679489661923
-# define PI_4			0.78539816339744830962
-# define TWO_PI     (6.28318530717958647692528676655900576)
-# define TILE_SIZE 		64
+# define KEY_W 				119
+# define KEY_A				97
+# define KEY_S 				115
+# define KEY_D 				100
+# define KEY_ESC 			65307
+# define KEY_LEFT 			65361
+# define KEY_RIGHT 			65363
+# define WINDOW_WIDTH		1280
+# define WINDOW_HEIGHT		720
+# define MINIMAP_WIDTH		WINDOW_WIDTH
+# define MINIMAP_HEIGHT		WINDOW_HEIGHT
+# define FOV_ANGLE			1.0471975512
+# define DIST_PROJ_PLANE	(WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2)
+# define PI					3.14159265358979323846	
+# define PI_2				1.57079632679489661923
+# define PI_4				0.78539816339744830962
+# define TWO_PI 			6.28318530717958647692
+# define TILE_SIZE 			32
 
 typedef struct s_player
 {
