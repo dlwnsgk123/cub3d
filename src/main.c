@@ -41,8 +41,8 @@ void	draw(t_vars *vars)
 {
 	draw_f_c(vars);
 //	draw_minimap(vars);
-//	draw_player(vars);
 	ray_draw(vars);
+//	draw_player(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->screen.ptr, 0, 0);
 }
 
