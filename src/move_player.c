@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:52:22 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/24 09:37:19 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/24 10:57:55 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	is_wall(t_vars *vars, double new_px, double new_py)
 		return (1);
 	new_mapx = (int)floor(new_px / vars->tile_size);
 	new_mapy = (int)floor(new_py / vars->tile_size);
+	if (new_mapx >= vars->map.x || new_mapy >= vars->map.y)
+		return (1);
 	if (check_edge(vars, new_mapx, new_mapy))
 		return (1);
 	return (vars->map.mapdata[new_mapy][new_mapx] == '1');
