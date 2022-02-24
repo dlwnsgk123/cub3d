@@ -6,177 +6,14 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 14:50:26 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/24 10:23:58 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	variable_set(t_mpl *v, t_point next)
-{
-	v->dx = next.x;
-	v->dy = next.y;
-	v->incx = 0.001;
-	v->incy = 0.001;
-	if (v->dx == 0)
-		v->incx = 0;
-	if (v->dx < 0)
-	{
-		v->dx = -v->dx;
-		v->incx = -v->incx;
-	}
-	if (v->dy == 0)
-		v->incy = 0;
-	if (v->dy < 0)
-	{
-		v->dy = -v->dy;
-		v->incy = -v->incy;
-	}
-	v->ddx = v->dx * 2;
-	v->ddy = v->dy * 2;
-}
 
-static void	ft_x_major(t_ray *r, t_point mp, t_map map)
-{
-	r->v.errorprev = r->v.dx;
-	r->v.error = r->v.dx;
-	while (1)
-	{
-		mp.x += r->v.incx;
-		r->v.error += r->v.ddy;
-		if (r->v.error > r->v.ddx)
-		{
-			mp.y += r->v.incy;
-			r->v.error -= r->v.ddx;
-			if (r->v.error + r->v.errorprev < r->v.ddx)
-			{
-				if(map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')
-				{
-					r->hit.x = mp.x;
-					r->hit.y = mp.y - r->v.incy;
-					break;
-				}
-			}
-			else if (r->v.error + r->v.errorprev > r->v.ddx)
-			{
-				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1')
-				{
-					r->hit.x = mp.x - r->v.incx;
-					r->hit.y = mp.y;
-					break ;
-				}
-			}
-			else
-			{
-				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1' &&
-					map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')
-				{
-					r->hit.x = mp.x - r->v.incx;
-					r->hit.y = mp.y - r->v.incy;
-					break ;
-				}
-			}
-		}
-		if (map.mapdata[(int)mp.y][(int)mp.x] == '1')
-		{
-			r->hit.x = mp.x;
-			r->hit.y = mp.y;
-			break ;
-		}
-		r->v.errorprev = r->v.error;
-	}
-}
-
-static void	ft_y_major(t_ray *r, t_point mp, t_map map)
-{
-	r->v.errorprev = r->v.dy;
-	r->v.error = r->v.dy;
-	while (1)
-	{
-		mp.y += r->v.incy;
-		r->v.error += r->v.ddx;
-		if (r->v.error > r->v.ddy)
-		{
-			r->v.error -= r->v.ddy;
-			mp.x += r->v.incx;
-			if (r->v.error + r->v.errorprev < r->v.ddy)
-			{
-				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1')	// x
-				{
-					r->hit.x = mp.x - r->v.incx;
-					r->hit.y = mp.y;
-					break ;
-				}
-			}
-			else if (r->v.error + r->v.errorprev > r->v.ddy)
-			{
-				if (map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')	// y
-				{
-					r->hit.x = mp.x;
-					r->hit.y = mp.y - r->v.incy;
-					break ;
-				}
-			}
-			else
-			{
-				if (map.mapdata[(int)mp.y][(int)(mp.x - r->v.incx)] == '1' &&
-					map.mapdata[(int)(mp.y - r->v.incy)][(int)mp.x] == '1')	//양옆에 막혀있을 때
-				{
-					r->hit.x = mp.x - r->v.incx;
-					r->hit.y = mp.y - r->v.incy;
-					break ;
-				}
-			}
-		}
-		if (map.mapdata[(int)mp.y][(int)mp.x] == '1')
-		{
-			r->hit.x = mp.x;
-			r->hit.y = mp.y;
-			break ;
-		}
-		r->v.errorprev = r->v.error;
-	}
-}
-
-static void	hit_ray(t_ray *r, t_vars *data, double ray_angle)
-{
-	t_point	next;
-	t_point player;
-	int x;
-	int y;
-
-	player.x = data->player.px / data->tile_size;
-	player.y = data->player.py / data->tile_size;
-	next.x = cos(ray_angle);
-	next.y = sin(ray_angle);
-	variable_set(&r->v, next);
-	r->wall_hit = 0;
-	r->is_v = 0;
-	if (r->v.ddx > r->v.ddy)
-		ft_x_major(r, player, data->map);
-	else
-		ft_y_major(r, player, data->map);
-}
-
-static double camera_angle(double ra, double pa)
-{
-	double ca;
-
-	ca = pa - ra;
-	if (ca < 0)
-		ca += (2 * PI);
-	if (ca > (2 * PI))
-		ca -= (2 * PI);
-	return (ca);
-}
-
-
-double	distance(float x1,float x2, float y1, float y2)
-{
-	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
-
-void draw_wall(t_vars *vars, t_ray ray, double dist, int x)
+void draw_wall(t_vars *vars, t_ray ray, int x)
 {
 	int	width;
 	int	height;
@@ -186,7 +23,8 @@ void draw_wall(t_vars *vars, t_ray ray, double dist, int x)
 
 	width = 1;
 	height = WINDOW_HEIGHT;
-	lineH =  DIST_PROJ_PLANE / dist;
+	ray.dist *= cos(ray.ra - vars->player.pa);
+	lineH = DIST_PROJ_PLANE / ray.dist * TILE_SIZE;
 	if (lineH > height)
 		lineH = height;
 	drawStart = -(lineH / 2) + (height / 2);
@@ -209,46 +47,220 @@ void draw_wall(t_vars *vars, t_ray ray, double dist, int x)
 		ew = sw + width;
 		while (sw <= ew)
 		{
-			if (dist <= 10)
-			{
-					if (ray.is_v == 1)
-						vars->screen.data[((h + drawStart) * y) + sw] = green;
-					else
-						vars->screen.data[((h + drawStart) * y) + sw] = blue;
-			}
+			if (ray.wall_dir == 1)
+				vars->screen.data[((h + drawStart) * y) + sw] = 0xFF0000;
+			if (ray.wall_dir == 2)
+				vars->screen.data[((h + drawStart) * y) + sw] = 0xFF00FF;
+			if (ray.wall_dir == 3)
+				vars->screen.data[((h + drawStart) * y) + sw] = 0x00FF00;
+			if (ray.wall_dir == 4)
+				vars->screen.data[((h + drawStart) * y) + sw] = 0x0000FF;
 			sw++;
 		}
 		h++;
 	}
 }
 
-void	ray_draw(t_vars *data)
+double	normalize_angle(double angle)
 {
-	double	dist;
-	t_p     start;
-	t_p     end;
-	double	ca;
-	double	pa;
-	double	ra;
-	int	i;
+	if (angle >= 0)
+	{
+		while (angle >= TWO_PI)
+			angle -= TWO_PI;
+	}
+	else
+	{
+		while (angle <= 0)
+			angle += TWO_PI;
+	}
+	return (angle);
+}
 
-	pa = data->player.pa;
+int		get_wall_dir(t_vars *vars, t_ray *ray)
+{
+	if (!ray->hit_v)
+	{
+		if (vars->player.py - ray->hity > 0)
+			return (1);
+		else if (vars->player.py - ray->hity < 0)
+			return (2);
+	}
+	else
+	{
+		if (vars->player.px - ray->hitx > 0)
+			return (3);
+		else if (vars->player.px - ray->hitx < 0)
+			return (4);
+	}
+}
+
+double	get_distance(t_vars *vars, t_ray_util *hv)
+{
+	double dist;
+
+	if (hv->found_wall_hit)
+	{
+		dist = sqrt((hv->wall_hitx - vars->player.px) 
+		* (hv->wall_hitx - vars->player.px) 
+		+ (hv->wall_hity - vars->player.py) 
+		* (hv->wall_hity - vars->player.py));
+	}
+	else
+		dist = 10000000000000;
+	return (dist);
+}
+
+void	vert_init(t_vars *vars, t_ray *ray, t_ray_util *v, double ra)
+{
+	t_player	player;
+
+	player = vars->player;
+	v->found_wall_hit = false;
+	v->wall_hitx = 0;
+	v->wall_hity = 0;
+	v->xintercept = floor(player.px / TILE_SIZE) * TILE_SIZE;
+	if (ray->facing_right)
+		v->xintercept += TILE_SIZE;
+	v->yintercept = player.py + (v->xintercept - player.px) * tan(ra);
+	v->xstep = TILE_SIZE;
+	if (ray->facing_left)
+		v->xstep *= -1;
+	v->ystep = TILE_SIZE * tan(ra);
+	if (ray->facing_up && v->ystep > 0)
+		v->ystep *= -1;
+	if (ray->facing_down && v->ystep < 0)
+		v->ystep *= -1;
+
+
+}
+
+void	vert_check(t_vars *vars, t_ray *ray, t_ray_util *v, double ra)
+{
+	double		next_x;
+	double		next_y;
+
+	vert_init(vars, ray, v, ra);
+	next_x = v->xintercept;
+	next_y = v->yintercept;
+	while (next_x >= 0 && next_x <= vars->map.x * TILE_SIZE
+		&& next_y >= 0 && next_y <= vars->map.y * TILE_SIZE)
+	{
+        float xToCheck = next_x + (ray->facing_left ? -1 : 0);
+        float yToCheck = next_y;
+		if (is_wall(vars, xToCheck, yToCheck))
+		{
+			v->found_wall_hit = true;
+			v->wall_hitx = next_x;
+			v->wall_hity = next_y;
+			break ;
+		}
+		next_x += v->xstep;
+		next_y += v->ystep;
+	}
+	v->distance = get_distance(vars, v);
+}
+
+void	horz_init(t_vars *vars, t_ray *ray, t_ray_util *h, double ra)
+{
+	t_player	player;
+
+	player = vars->player;
+	h->wall_hitx = 0;
+	h->wall_hity = 0;
+	h->found_wall_hit = false;
+	h->yintercept = floor(player.py / TILE_SIZE) * TILE_SIZE;
+	if (ray->facing_down)
+		h->yintercept += TILE_SIZE;
+	h->xintercept = player.px + (h->yintercept - player.py) / tan(ra);
+	h->ystep = TILE_SIZE;
+	if (ray->facing_up)
+		h->ystep *= -1;
+	h->xstep = TILE_SIZE / tan(ra);
+	if (ray->facing_left && h->xstep > 0)
+		h->xstep *= -1;
+	if (ray->facing_right && h->xstep < 0)
+		h->xstep *= -1;
+
+}
+
+void	check_horz(t_vars *vars, t_ray *ray, t_ray_util *h, double ra)
+{
+	double		next_x;
+	double		next_y;
+
+	horz_init(vars, ray, h, ra);
+	next_x = h->xintercept;
+	next_y = h->yintercept;
+	while (next_x >= 0 && next_x <= vars->map.x * TILE_SIZE
+		&& next_y >= 0 && next_y <= vars->map.y * TILE_SIZE)
+	{
+        float xToCheck = next_x;
+        float yToCheck = next_y + (ray->facing_up ? -1 : 0);
+		if (is_wall(vars, xToCheck, yToCheck))
+		{
+			h->found_wall_hit = true;
+			h->wall_hitx = next_x;
+			h->wall_hity = next_y;
+			break ;
+		}
+		next_x += h->xstep;
+		next_y += h->ystep;
+	}
+	h->distance = get_distance(vars, h);
+}
+
+void	cast_one_ray(t_vars *vars, t_ray *ray, double ra)
+{
+	t_ray_util v;
+	t_ray_util h;
+
+	ra = normalize_angle(ra);
+	ray->ra = ra;
+	ray->facing_down = ra > 0 && ra < PI;
+	ray->facing_up = !ray->facing_down;
+	ray->facing_right = ra < 0.5 * PI || ra > 1.5 * PI;
+	ray->facing_left = !ray->facing_right;
+	check_horz(vars, ray, &h, ra);
+	vert_check(vars, ray, &v, ra);
+	if (v.distance < h.distance)
+	{
+		ray->hitx = v.wall_hitx;
+		ray->hity = v.wall_hity;
+		ray->dist = v.distance;
+		ray->hit_v = true;
+	}
+	else
+	{
+		ray->hitx = h.wall_hitx;
+		ray->hity = h.wall_hity;
+		ray->dist = h.distance;
+		ray->hit_v = false;
+	}
+	ray->wall_dir = get_wall_dir(vars, ray);
+}
+
+void	ray_draw(t_vars *vars)
+{
+	double	ca;
+	double	ra;
+	t_ray	ray;
+	int i;
+
+	t_p start;
+	t_p end;
+
 	i = 0;
-    ra = pa - (FOV_ANGLE / 2.0);
+    ra = vars->player.pa - (FOV_ANGLE / 2.0);
 	while (i < WINDOW_WIDTH)
 	{
-		ca = camera_angle(ra, pa);
-		hit_ray(&data->ray, data, ra);
-		dist = distance(data->player.px, data->ray.hit.x * data->tile_size, data->player.py, data->ray.hit.y * data->tile_size) * cos(ca) / data->tile_size;
-		if (dist <= 1)
-			dist = 1;
-		start.x = data->player.px;
-		start.y = data->player.py;
-		end.x = data->ray.hit.x * data->tile_size;
-		end.y = data->ray.hit.y * data->tile_size;
-	//	draw_line(data, start, end);
-		draw_wall(data, data->ray, dist, i);
-        ra += FOV_ANGLE / WINDOW_WIDTH;
+		start.x = vars->player.px;
+		start.y = vars->player.py;
+		cast_one_ray(vars, &ray, ra);
+		end.x = ray.hitx;
+		end.y = ray.hity;
+//		draw_line(vars, start, end);
+		draw_wall(vars, ray, i);
+		ra += FOV_ANGLE / WINDOW_WIDTH;
 		i++;
 	}
 }

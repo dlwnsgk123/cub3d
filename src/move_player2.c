@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:55:30 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 13:43:59 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/24 09:21:40 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	keyrelease(int keycode, t_vars *vars)
 
 void	rotate_left(t_vars *vars)
 {
-	vars->player.pa -= 0.02;
+	vars->player.pa -= PI / 100;
 	if (vars->player.pa < 0)
 		vars->player.pa += 2 * PI;
 	vars->player.pdx = cos(vars->player.pa) * (vars->tile_size / 2);
@@ -59,7 +59,7 @@ void	rotate_left(t_vars *vars)
 
 void	rotate_right(t_vars *vars)
 {
-	vars->player.pa += 0.02;
+	vars->player.pa += PI / 100;
 	if (vars->player.pa > 2 * PI)
 		vars->player.pa -= 2 * PI;
 	vars->player.pdx = cos(vars->player.pa) * (vars->tile_size / 2);
@@ -68,11 +68,11 @@ void	rotate_right(t_vars *vars)
 
 void	move_right(t_vars *vars)
 {
-	float	new_x;
-	float	new_y;
+	double	new_x;
+	double	new_y;
 
-	new_x = vars->player.px - sin(vars->player.pa) * vars->tile_size * 0.05;
-	new_y = vars->player.py + cos(vars->player.pa) * vars->tile_size * 0.05;
+	new_x = vars->player.px - sin(vars->player.pa) * vars->tile_size * 0.03;
+	new_y = vars->player.py + cos(vars->player.pa) * vars->tile_size * 0.03;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;

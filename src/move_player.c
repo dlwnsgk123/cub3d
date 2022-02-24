@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:52:22 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 13:44:13 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/24 09:37:19 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_edge(t_vars *vars, int new_mapx, int new_mapy)
 	return (0);
 }
 
-int	is_wall(t_vars *vars, float new_px, float new_py)
+int	is_wall(t_vars *vars, double new_px, double new_py)
 {
 	int	new_mapx;
 	int	new_mapy;
@@ -39,8 +39,8 @@ int	is_wall(t_vars *vars, float new_px, float new_py)
 	if (new_px < 0 || new_px > WINDOW_WIDTH
 		|| new_py < 0 || new_py > WINDOW_HEIGHT)
 		return (1);
-	new_mapx = floor(new_px / vars->tile_size);
-	new_mapy = floor(new_py / vars->tile_size);
+	new_mapx = (int)floor(new_px / vars->tile_size);
+	new_mapy = (int)floor(new_py / vars->tile_size);
 	if (check_edge(vars, new_mapx, new_mapy))
 		return (1);
 	return (vars->map.mapdata[new_mapy][new_mapx] == '1');
@@ -48,11 +48,11 @@ int	is_wall(t_vars *vars, float new_px, float new_py)
 
 void	move_up(t_vars *vars)
 {
-	float	new_x;
-	float	new_y;
+	double	new_x;
+	double	new_y;
 
-	new_x = vars->player.px + cos(vars->player.pa) * vars->tile_size * 0.05;
-	new_y = vars->player.py + sin(vars->player.pa) * vars->tile_size * 0.05;
+	new_x = vars->player.px + cos(vars->player.pa) * vars->tile_size * 0.03;
+	new_y = vars->player.py + sin(vars->player.pa) * vars->tile_size * 0.03;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;
@@ -62,11 +62,11 @@ void	move_up(t_vars *vars)
 
 void	move_down(t_vars *vars)
 {
-	float	new_x;
-	float	new_y;
+	double	new_x;
+	double	new_y;
 
-	new_x = vars->player.px - cos(vars->player.pa) * vars->tile_size * 0.05;
-	new_y = vars->player.py - sin(vars->player.pa) * vars->tile_size * 0.05;
+	new_x = vars->player.px - cos(vars->player.pa) * vars->tile_size * 0.03;
+	new_y = vars->player.py - sin(vars->player.pa) * vars->tile_size * 0.03;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;
@@ -76,11 +76,11 @@ void	move_down(t_vars *vars)
 
 void	move_left(t_vars *vars)
 {
-	float	new_x;
-	float	new_y;
+	double	new_x;
+	double	new_y;
 
-	new_x = vars->player.px + sin(vars->player.pa) * vars->tile_size * 0.05;
-	new_y = vars->player.py - cos(vars->player.pa) * vars->tile_size * 0.05;
+	new_x = vars->player.px + sin(vars->player.pa) * vars->tile_size * 0.03;
+	new_y = vars->player.py - cos(vars->player.pa) * vars->tile_size * 0.03;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;

@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 13:59:14 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/24 10:12:07 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include "../Libft/libft.h"
+# include <stdbool.h>
 
 # define KEY_W 119
 # define KEY_A 97
@@ -26,8 +27,8 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
-# define WINDOW_WIDTH	1280
-# define WINDOW_HEIGHT	720
+# define WINDOW_WIDTH	1920
+# define WINDOW_HEIGHT	1080
 # define MINIMAP_WIDTH	WINDOW_WIDTH
 # define MINIMAP_HEIGHT	WINDOW_HEIGHT
 # define FOV_ANGLE		1.0471975512
@@ -35,14 +36,16 @@
 # define PI				3.14159265358979323846	
 # define PI_2			1.57079632679489661923
 # define PI_4			0.78539816339744830962
+# define TWO_PI     (6.28318530717958647692528676655900576)
+# define TILE_SIZE 		64
 
 typedef struct s_player
 {
-	float	px;
-	float	py;
-	float	pdx;
-	float	pdy;
-	float	pa;
+	double	px;
+	double	py;
+	double	pdx;
+	double	pdy;
+	double	pa;
 }				t_player;
 
 typedef struct s_key
@@ -68,34 +71,41 @@ typedef struct s_p
 	int	y;
 }				t_p;
 
-typedef struct s_mpl
-{
-	double	dy;
-	double	ddy;
-	double	dx;
-	double	ddx;
-	double	dv;
-	double	incx;
-	double	incy;
-	double	error;
-	double	errorprev;
-}	t_mpl;
-
 typedef struct s_point
 {
 	double	x;
 	double	y;
 }	t_point;
 
+typedef struct s_ray_util
+{
+	int		found_wall_hit;
+	double	xintercept;
+	double	yintercept;
+	double	xstep;
+	double	ystep;
+	double	wall_hitx;
+	double	wall_hity;
+	double	distance;
+	int 	facing_down;
+	int		facing_up;
+	int		facing_right;
+	int		facing_left;
+}				t_ray_util;
+
 typedef struct s_ray
 {
-	t_mpl	v;
-	t_point	pos;
-	t_point	hit;
-	t_point	prev_dir;
-	int 	is_v;
-	int 	wall_hit; // hit한 방향 4:N, 3:S, 2:E, 1:W
-}	t_ray;
+	double		hitx;
+	double		hity;
+	double		dist;
+	double		ra;
+	int			hit_v;
+	int 		facing_down;
+	int			facing_up;
+	int			facing_right;
+	int			facing_left;
+	int			wall_dir;
+} t_ray;
 
 typedef struct s_img
 {
@@ -149,7 +159,7 @@ void	move_left(t_vars *vars);
 void	move_right(t_vars *vars);
 void	rotate_left(t_vars *vars);
 void 	rotate_right(t_vars *vars);
-int		is_wall(t_vars *vars, float new_px, float new_py);
+int		is_wall(t_vars *vars, double new_px, double new_py);
 int		check_edge(t_vars *vars, int new_mapx, int new_mapy);
 
 

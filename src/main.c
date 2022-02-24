@@ -39,9 +39,9 @@ int	close_window(void)
 
 void	draw(t_vars *vars)
 {
-//	draw_player(vars);
 	draw_f_c(vars);
 //	draw_minimap(vars);
+//	draw_player(vars);
 	ray_draw(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->screen.ptr, 0, 0);
 }
@@ -60,8 +60,7 @@ int	main_loop(t_vars *vars)
 		rotate_left(vars);
 	if (vars->key.r == 1)
 		rotate_right(vars);
-	if (vars->key.w == 1 || vars->key.a == 1 || vars->key.s == 1 || vars->key.d == 1 || vars->key.l == 1 || vars->key.r == 1)
-		draw(vars);
+	draw(vars);
 	return (0);
 }
 
