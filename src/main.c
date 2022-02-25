@@ -66,8 +66,8 @@ int	main_loop(t_vars *vars)
 
 void	init(t_vars *vars)
 {
-	vars->player.pdx = cos(vars->player.pa) * vars->tile_size / 2;
-	vars->player.pdy = sin(vars->player.pa) * vars->tile_size / 2;
+	vars->player.pdx = cos(vars->player.pa) * TILE_SIZE / 4;
+	vars->player.pdy = sin(vars->player.pa) * TILE_SIZE / 4;
 	vars->key.w = 0;
 	vars->key.a = 0;
 	vars->key.s = 0;

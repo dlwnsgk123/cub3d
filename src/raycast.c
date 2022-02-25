@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 17:15:55 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 22:03:23 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	vert_check(t_vars *vars, t_ray *ray, t_ray_util *v, double ra)
 	while (next_x >= 0 && next_x <= vars->map.x * TILE_SIZE
 		&& next_y >= 0 && next_y <= vars->map.y * TILE_SIZE)
 	{
-        float xToCheck = next_x + (ray->facing_left ? -1 : 1);
+        float xToCheck = next_x + (ray->facing_left ? -1 : 0);
         float yToCheck = next_y;
 		if (is_wall(vars, xToCheck, yToCheck))
 		{
@@ -244,6 +244,49 @@ void	cast_one_ray(t_vars *vars, t_ray *ray, double ra)
 	ray->wall_dir = get_wall_dir(vars, ray);
 }
 
+void	draw_line(t_vars *vars, t_p start, t_p end)
+{
+	int x = start.x;
+	int y = start.y;
+	int Xfactor = end.x < start.x ? -1 : 1;
+	int Yfactor = end.y < start.y ? -1 : 1;
+
+	int w = fabs(end.x - start.x);
+	int h = fabs(end.y - start.y);
+	int f;
+	
+	if (w > h)
+	{
+		f = (2 * h) - w;
+		for (x = start.x; x != end.x; x += Xfactor)
+		{
+			if (f < 0)
+				f += 2 * h;
+			else
+			{
+				y += Yfactor;
+				f += 2 * (h - w);
+			}
+			vars->screen.data[x + y * vars->screen.size_line] = 0x0000FF;
+		}
+	}
+	else
+	{
+		f = (2 * w) - h;
+		for (y = start.y; y != end.y; y += Yfactor)
+		{
+			if (f < 0)
+				f += 2 * w;
+			else
+			{
+				x += Xfactor;
+				f += 2 * (w - h);
+			}
+			vars->screen.data[x + y * vars->screen.size_line] = 0x0000FF;
+		}
+	}
+}
+
 void	ray_draw(t_vars *vars)
 {
 	double	ca;
@@ -263,7 +306,7 @@ void	ray_draw(t_vars *vars)
 		cast_one_ray(vars, &ray, ra);
 		end.x = ray.hitx / TILE_SIZE * 10;
 		end.y = ray.hity / TILE_SIZE * 10;
-	//	draw_line(vars, start, end);
+		draw_line(vars, start, end);
 		draw_wall(vars, ray, i);
 		ra += FOV_ANGLE / WINDOW_WIDTH;
 		i++;

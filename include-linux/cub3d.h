@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 16:12:31 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 21:45:32 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void	draw(t_vars *vars);
 
 void	draw_image_test(t_vars *vars);
 void	ray_draw(t_vars *data);
-void	draw_line(t_vars *vars, t_p start, t_p end);
 void	draw_pixel(t_img *img, int x, int y, int color);
 
 #endif
