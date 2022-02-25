@@ -12,6 +12,7 @@
 		"string_view": "c",
 		"vector": "c",
 		"stdio.h": "c",
-		"stdbool.h": "c"
+		"stdbool.h": "c",
+		"cmath": "c"
 	}
 }

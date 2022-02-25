@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 03:10:05 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 03:12:18 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 04:52:13 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ void	split_free(char **str)
 	free(str);
 }
 
+int	tmp_len(char **tmp)
+{
+	int	i;
+
+	i = 0;
+	while (tmp[i])
+		i++;
+	return (i);
+}
+
 void	check_extension(char *filename)
 {
 	int		len;
@@ -37,14 +47,4 @@ void	check_extension(char *filename)
 	ext = &filename[len - 4];
 	if (ft_strncmp(ext, ".cub", 4) != 0)
 		put_error("file extension error");
-}
-
-int	tmp_len(char **tmp)
-{
-	int	i;
-
-	i = 0;
-	while (tmp[i])
-		i++;
-	return (i);
 }

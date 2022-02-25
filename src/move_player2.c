@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:55:30 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/24 09:21:40 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 17:00:34 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,20 @@ int	keyrelease(int keycode, t_vars *vars)
 
 void	rotate_left(t_vars *vars)
 {
-	vars->player.pa -= PI / 100;
+	vars->player.pa -= PI / 180;
 	if (vars->player.pa < 0)
 		vars->player.pa += 2 * PI;
-	vars->player.pdx = cos(vars->player.pa) * (vars->tile_size / 2);
-	vars->player.pdy = sin(vars->player.pa) * (vars->tile_size / 2);
+	vars->player.pdx = cos(vars->player.pa) * (TILE_SIZE / 2);
+	vars->player.pdy = sin(vars->player.pa) * (TILE_SIZE / 2);
 }
 
 void	rotate_right(t_vars *vars)
 {
-	vars->player.pa += PI / 100;
+	vars->player.pa += PI / 180;
 	if (vars->player.pa > 2 * PI)
 		vars->player.pa -= 2 * PI;
-	vars->player.pdx = cos(vars->player.pa) * (vars->tile_size / 2);
-	vars->player.pdy = sin(vars->player.pa) * (vars->tile_size / 2);
+	vars->player.pdx = cos(vars->player.pa) * (TILE_SIZE / 2);
+	vars->player.pdy = sin(vars->player.pa) * (TILE_SIZE / 2);
 }
 
 void	move_right(t_vars *vars)
@@ -71,8 +71,8 @@ void	move_right(t_vars *vars)
 	double	new_x;
 	double	new_y;
 
-	new_x = vars->player.px - sin(vars->player.pa) * vars->tile_size * 0.03;
-	new_y = vars->player.py + cos(vars->player.pa) * vars->tile_size * 0.03;
+	new_x = vars->player.px - sin(vars->player.pa) * TILE_SIZE * 0.1;
+	new_y = vars->player.py + cos(vars->player.pa) * TILE_SIZE * 0.1;
 	if (!is_wall(vars, new_x, new_y))
 	{
 		vars->player.px = new_x;

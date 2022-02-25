@@ -6,17 +6,20 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:07:31 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/21 00:45:28 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 16:10:59 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_horizon_wall(t_vars *vars, char *line)
+void	check_row_line(t_vars *vars, char *line)
 {
 	int	i;
 	int	len;
+	char *tmp;
 
+	tmp = ft_strtrim_back(line, " ");
+	len = ft_strlen(tmp);
 	i = 0;
 	if (ft_strchr("NESW0", line[i]))
 		put_error("wall error1");
@@ -27,16 +30,17 @@ void	check_horizon_wall(t_vars *vars, char *line)
 		if (ft_strchr("NESW0", line[i]))
 			put_error("wall error2");
 	}
-	while (i < vars->map.x - 1)
+	while (i < len)
 	{
-		if ((ft_strchr("NESW0", line[i]) && line[i + 1] == ' ')
+		if ((ft_strchr("NESW0", line[i]) && (line[i + 1] == ' ' || line[i + 1] == '\0'))
 			|| (line[i] == ' ' && ft_strchr("NESW0", line[i + 1])))
 			put_error("wall error3");
 		i++;
 	}
+	free(tmp);
 }
 
-void	check_vertical_wall(t_vars *vars, char **map)
+void	check_col_line(t_vars *vars, char **map)
 {
 	int	x;
 	int	y;
@@ -56,7 +60,7 @@ void	check_vertical_wall(t_vars *vars, char **map)
 		}
 		while (y < vars->map.y - 1)
 		{
-			if ((ft_strchr("NESW0", map[y][x]) && map[y + 1][x] == ' ')
+			if ((ft_strchr("NESW0", map[y][x]) && (map[y + 1][x] == ' ' || map[y + 1][x] == '\0'))
 				|| (map[y][x] == ' ' && ft_strchr("NESW0", map[y + 1][x])))
 				put_error("wall error6");
 			y++;
@@ -73,15 +77,15 @@ void	map_wall_check(t_vars *vars)
 
 	map = vars->map.mapdata;
 	y = 0;
-	check_vertical_wall(vars, map);
+	check_col_line(vars, map);
 	while (map[y])
 	{
-		check_horizon_wall(vars, map[y]);
+		check_row_line(vars, map[y]);
 		y++;
 	}
 }
 
-void	check_mapx(char *line, t_vars *vars)
+void	check_mapx_size(char *line, t_vars *vars)
 {
 	char	*tmp;
 	int		len;
@@ -113,7 +117,7 @@ void	get_map_x_y(int skip_line, char *filename, t_vars *vars)
 		if (*line != '\0')
 		{
 			vars->map.y++;
-			check_mapx(line, vars);
+			check_mapx_size(line, vars);
 		}
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:11:38 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/24 11:01:08 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 16:09:20 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void	malloc_mapdata(t_vars *vars)
 	vars->map.mapdata[vars->map.y] = NULL;
 }
 
-void	set_player_angle(t_vars *vars, char c)
+void	set_player_info(t_vars *vars, int	x, int y)
 {
+	char c;
+
+	c = vars->map.mapdata[y][x];
 	if (c == 'N')
 		vars->player.pa = 4.71238898038;
 	if (c == 'S')
@@ -40,6 +43,8 @@ void	set_player_angle(t_vars *vars, char c)
 		vars->player.pa = 0;
 	if (c == 'W')
 		vars->player.pa = PI;
+	vars->player.px = x * TILE_SIZE + TILE_SIZE / 2;
+	vars->player.py = y * TILE_SIZE + TILE_SIZE / 2;
 }
 
 void	parse_map(t_vars *vars)
@@ -50,31 +55,23 @@ void	parse_map(t_vars *vars)
 	int		flag;
 
 	mapdata = vars->map.mapdata;
-	y = -1;
 	flag = 0;
+	y = -1;
 	while (mapdata[++y] != NULL)
 	{
 		x = -1;
 		while (mapdata[y][++x] != '\0')
 		{
 			if (!ft_strchr(" 01NSEW", mapdata[y][x]))
-				put_error("map data error");
+				put_error("map data error : not allowed data");
 			if (ft_strchr("NESW", mapdata[y][x]))
 			{
 				if (flag++ > 1)
-					put_error("mapdata error");
-				set_player_angle(vars, mapdata[y][x]);
-				vars->player.px = x * vars->tile_size + vars->tile_size / 2;
-				vars->player.py = y * vars->tile_size + vars->tile_size / 2;
+					put_error("mapdata error : too many player");
+				set_player_info(vars, x, y);
 			}
 		}
 	}
-}
-
-void	set_tile_size(t_vars *vars)
-{
-	if (MINIMAP_WIDTH / vars->map.x < MINIMAP_HEIGHT / vars->map.y)
-		vars->tile_size = TILE_SIZE;
-	else
-		vars->tile_size = TILE_SIZE;
+	if (flag == 0)
+		put_error("map data error : need player");
 }

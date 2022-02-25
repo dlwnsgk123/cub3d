@@ -19,14 +19,13 @@ SRCS =  src/main.c \
 		src/parse4.c \
 		src/parse_util.c \
 		src/error.c \
-		src/draw.c \
 		src/move_player.c \
 		src/move_player2.c \
 		src/raycast.c \
 
 CC = gcc
 
-CFLAGS = #-fsanitize=address
+CFLAGS = -fsanitize=address
 
 LEAKFLAGS = 
 

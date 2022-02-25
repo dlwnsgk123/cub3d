@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/23 01:17:33 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 16:31:52 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	set_img(t_img *img, t_vars *vars, char *path)
 		put_error("img path error");
 	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bpp, \
 							&img->size_line, &img->endian);
+	img->size_line = img->size_line / 4;
 }
 
 int	set_color(char *color_info)
@@ -43,13 +44,13 @@ void	get_info(char *line, t_vars *vars)
 	int		height;
 
 	tmp = ft_split(line, ' ');
-	if (ft_strcmp(tmp[0], "EA") == 0)
+	if (ft_strcmp(tmp[0], "NO") == 0)
 		set_img(&vars->texture[0], vars, tmp[1]);
-	else if (ft_strcmp(tmp[0], "WE") == 0)
-		set_img(&vars->texture[1], vars, tmp[1]);
 	else if (ft_strcmp(tmp[0], "SO") == 0)
+		set_img(&vars->texture[1], vars, tmp[1]);
+	else if (ft_strcmp(tmp[0], "EA") == 0)
 		set_img(&vars->texture[2], vars, tmp[1]);
-	else if (ft_strcmp(tmp[0], "NO") == 0)
+	else if (ft_strcmp(tmp[0], "WE") == 0)
 		set_img(&vars->texture[3], vars, tmp[1]);
 	else if (ft_strcmp(tmp[0], "F") == 0)
 		vars->f_color = set_color(tmp[1]);
@@ -96,9 +97,9 @@ void	parse(char *filename, t_vars *vars)
 	check_extension(filename);
 	skip_line = set_info(filename, vars);
 	get_map_x_y(skip_line, filename, vars);
-	set_tile_size(vars);
 	malloc_mapdata(vars);
 	set_map(skip_line, filename, vars);
 	parse_map(vars);
+//	print_map(vars);
 	map_wall_check(vars);
 }

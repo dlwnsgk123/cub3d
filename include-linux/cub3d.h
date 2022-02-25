@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/24 19:24:41 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/25 16:12:31 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@
 # define KEY_RIGHT 			65363
 # define WINDOW_WIDTH		1280
 # define WINDOW_HEIGHT		720
-# define MINIMAP_WIDTH		WINDOW_WIDTH
-# define MINIMAP_HEIGHT		WINDOW_HEIGHT
 # define FOV_ANGLE			1.0471975512
 # define DIST_PROJ_PLANE	(WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2)
 # define PI					3.14159265358979323846	
 # define PI_2				1.57079632679489661923
 # define PI_4				0.78539816339744830962
 # define TWO_PI 			6.28318530717958647692
-# define TILE_SIZE 			32
+# define TILE_SIZE 			64
 
 typedef struct s_player
 {
@@ -138,7 +136,6 @@ void	parse(char *filename, t_vars *vars);
 void 	map_wall_check(t_vars *vars);
 void	parse_map(t_vars *vars);
 void	malloc_mapdata(t_vars *vars);
-void	set_tile_size(t_vars *vars);
 void	get_map_x_y(int skip_line, char *filename, t_vars *vars);
 
 int		tmp_len(char **tmp);
