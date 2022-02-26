@@ -6,13 +6,13 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:07:31 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:31:24 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:48:23 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_row_line(t_vars *vars, char *line)
+static void	check_row_line(t_vars *vars, char *line)
 {
 	int		i;
 	int		len;
@@ -41,7 +41,7 @@ void	check_row_line(t_vars *vars, char *line)
 	free(tmp);
 }
 
-void	check_col_line(t_vars *vars, char **map)
+static void	check_col_line(t_vars *vars, char **map)
 {
 	int	x;
 	int	y;
@@ -85,15 +85,8 @@ void	map_wall_check(t_vars *vars)
 	}
 }
 
-void	check_multi_map(int	skip_line, char *filename)
+void	map_prev_skip(int fd, int skip_line, char *line)
 {
-	int		fd;
-	int		map_end;
-	char	*line;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		put_error("map open error");
 	while (skip_line--)
 	{
 		get_next_line(fd, &line);
@@ -105,6 +98,19 @@ void	check_multi_map(int	skip_line, char *filename)
 		free(line);
 		get_next_line(fd, &line);
 	}
+}
+
+void	check_multi_map(int	skip_line, char *filename)
+{
+	int		fd;
+	int		map_end;
+	char	*line;
+
+	line = NULL;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		put_error("map open error");
+	map_prev_skip(fd, skip_line, line);
 	free(line);
 	while (get_next_line(fd, &line))
 	{

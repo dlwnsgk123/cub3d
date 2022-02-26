@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:31:19 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:57:02 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	set_color(char *color_info)
 	tmp = ft_split(color_info, ',');
 	if (tmp_len(tmp) != 3)
 		put_error("color error1");
+	tmp_isnum(tmp);
 	r = ft_atoi(tmp[0]);
 	g = ft_atoi(tmp[1]);
 	b = ft_atoi(tmp[2]);

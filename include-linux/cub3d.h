@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:20:50 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:55:35 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void	map_wall_check(t_vars *vars);
 void	parse_map(t_vars *vars);
 void	malloc_mapdata(t_vars *vars);
 void	get_map_x_y(int skip_line, char *filename, t_vars *vars);
+void	check_multi_map(int	skip_line, char *filename);
+void	tmp_isnum(char **tmp);
 
 int		tmp_len(char **tmp);
 void	check_extension(char *filename);

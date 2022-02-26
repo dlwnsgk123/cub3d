@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 03:10:05 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 04:52:13 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:55:12 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ void	split_free(char **str)
 	}
 	free(str[i]);
 	free(str);
+}
+
+void	tmp_isnum(char **tmp)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (tmp[i])
+	{
+		j = 0;
+		while(tmp[i][j])
+		{
+			if (!ft_isdigit(tmp[i][j]))
+				put_error("color error");
+			j++;
+		}
+		i++;
+	}
 }
 
 int	tmp_len(char **tmp)
