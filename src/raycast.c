@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 22:03:23 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 14:57:26 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	get_texture_color(t_vars *vars, t_ray ray,  t_render r, int	y_point)
 	else
 		tex_x = (int)ray.hitx % TILE_SIZE * (vars->texture[tex_type].width / TILE_SIZE);
 	distance_from_top = y_point + r.wall_start - (WINDOW_HEIGHT / 2) + (r.wall_height / 2);
-	tex_y = distance_from_top * (64 / r.wall_height);
+	tex_y = distance_from_top * (vars->texture[tex_type].height / r.wall_height) * (vars->texture[tex_type].height / TILE_SIZE);
 	return (vars->texture[tex_type].data[tex_y * tex_width + tex_x]);
 }
 
@@ -86,16 +86,16 @@ int		get_wall_dir(t_vars *vars, t_ray *ray)
 	if (!ray->hit_v)
 	{
 		if (vars->player.py - ray->hity > 0)
-			return (0); // 북
+			return (0);
 		else if (vars->player.py - ray->hity < 0)
-			return (1); // 남
+			return (1);
 	}
 	else
 	{
 		if (vars->player.px - ray->hitx > 0)
-			return (2); // 동
+			return (2);
 		else if (vars->player.px - ray->hitx < 0)
-			return (3); // 서
+			return (3);
 	}
 }
 
@@ -141,6 +141,8 @@ void	vert_check(t_vars *vars, t_ray *ray, t_ray_util *v, double ra)
 {
 	double		next_x;
 	double		next_y;
+	double 		check_x;
+	double 		check_y;
 
 	vert_init(vars, ray, v, ra);
 	next_x = v->xintercept;
@@ -148,9 +150,9 @@ void	vert_check(t_vars *vars, t_ray *ray, t_ray_util *v, double ra)
 	while (next_x >= 0 && next_x <= vars->map.x * TILE_SIZE
 		&& next_y >= 0 && next_y <= vars->map.y * TILE_SIZE)
 	{
-        float xToCheck = next_x + (ray->facing_left ? -1 : 0);
-        float yToCheck = next_y;
-		if (is_wall(vars, xToCheck, yToCheck))
+		check_x = next_x + (ray->facing_left ? -1 : 1);
+        check_y = next_y;
+		if (is_wall(vars, check_x, check_y))
 		{
 			v->found_wall_hit = true;
 			v->wall_hitx = next_x;
@@ -190,6 +192,8 @@ void	check_horz(t_vars *vars, t_ray *ray, t_ray_util *h, double ra)
 {
 	double		next_x;
 	double		next_y;
+	double		check_x;
+	double		check_y;
 
 	horz_init(vars, ray, h, ra);
 	next_x = h->xintercept;
@@ -197,9 +201,9 @@ void	check_horz(t_vars *vars, t_ray *ray, t_ray_util *h, double ra)
 	while (next_x >= 0 && next_x <= vars->map.x * TILE_SIZE
 		&& next_y >= 0 && next_y <= vars->map.y * TILE_SIZE)
 	{
-        float xToCheck = next_x;
-        float yToCheck = next_y + (ray->facing_up ? -1 : 0);
-		if (is_wall(vars, xToCheck, yToCheck))
+		check_x = next_x;
+		check_y = next_y + (ray->facing_up ? -1 : 1);
+		if (is_wall(vars, check_x, check_y))
 		{
 			h->found_wall_hit = true;
 			h->wall_hitx = next_x;
@@ -212,7 +216,7 @@ void	check_horz(t_vars *vars, t_ray *ray, t_ray_util *h, double ra)
 	h->distance = get_distance(vars, h);
 }
 
-void	cast_one_ray(t_vars *vars, t_ray *ray, double ra)
+void	raycast(t_vars *vars, t_ray *ray, double ra)
 {
 	t_ray_util v;
 	t_ray_util h;
@@ -243,7 +247,7 @@ void	cast_one_ray(t_vars *vars, t_ray *ray, double ra)
 		put_error("error");
 	ray->wall_dir = get_wall_dir(vars, ray);
 }
-
+/*
 void	draw_line(t_vars *vars, t_p start, t_p end)
 {
 	int x = start.x;
@@ -286,6 +290,7 @@ void	draw_line(t_vars *vars, t_p start, t_p end)
 		}
 	}
 }
+*/
 
 void	ray_draw(t_vars *vars)
 {
@@ -303,10 +308,10 @@ void	ray_draw(t_vars *vars)
 	{
 		start.x = vars->player.px / TILE_SIZE * 10;
 		start.y = vars->player.py / TILE_SIZE * 10;
-		cast_one_ray(vars, &ray, ra);
+		raycast(vars, &ray, ra);
 		end.x = ray.hitx / TILE_SIZE * 10;
 		end.y = ray.hity / TILE_SIZE * 10;
-		draw_line(vars, start, end);
+	//	draw_line(vars, start, end);
 		draw_wall(vars, ray, i);
 		ra += FOV_ANGLE / WINDOW_WIDTH;
 		i++;

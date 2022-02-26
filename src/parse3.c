@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:11:38 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 16:09:20 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 14:18:11 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,44 @@ void	parse_map(t_vars *vars)
 	}
 	if (flag == 0)
 		put_error("map data error : need player");
+}
+
+void	check_mapx_size(char *line, t_vars *vars)
+{
+	char	*tmp;
+	int		len;
+
+	tmp = ft_strtrim_back(line, " ");
+	len = ft_strlen(tmp);
+	if (len > vars->map.x)
+		vars->map.x = len;
+	free(tmp);
+}
+
+void	set_map_x_y(int skip_line, char *filename, t_vars *vars)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	vars->map.y = 0;
+	vars->map.x = 0;
+	if (fd < 0)
+		put_error("map open error");
+	while (skip_line--)
+	{
+		get_next_line(fd, &line);
+		free(line);
+	}
+	while (get_next_line(fd, &line))
+	{
+		if (*line != '\0')
+		{
+			vars->map.y++;
+			check_mapx_size(line, vars);
+		}
+		free(line);
+	}
+	free(line);
+	close(fd);
 }

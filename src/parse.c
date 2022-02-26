@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 16:31:52 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 06:41:50 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,9 @@ void	parse(char *filename, t_vars *vars)
 
 	check_extension(filename);
 	skip_line = set_info(filename, vars);
-	get_map_x_y(skip_line, filename, vars);
+	set_map_x_y(skip_line, filename, vars);
 	malloc_mapdata(vars);
 	set_map(skip_line, filename, vars);
 	parse_map(vars);
-//	print_map(vars);
 	map_wall_check(vars);
 }

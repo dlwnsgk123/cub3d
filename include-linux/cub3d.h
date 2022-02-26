@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 21:45:32 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 14:47:54 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define KEY_ESC 			65307
 # define KEY_LEFT 			65361
 # define KEY_RIGHT 			65363
-# define WINDOW_WIDTH		1280
-# define WINDOW_HEIGHT		720
+# define WINDOW_WIDTH		1500
+# define WINDOW_HEIGHT		900
 # define FOV_ANGLE			1.0471975512
 # define DIST_PROJ_PLANE	(WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2)
 # define PI					3.14159265358979323846	
@@ -143,7 +143,7 @@ void	check_extension(char *filename);
 void 	split_free(char **str);
 
 void	set_map(int skip_line, char *filename, t_vars *vars);
-void 	get_map_x_y(int skip_line, char *filename, t_vars *vars);
+void 	set_map_x_y(int skip_line, char *filename, t_vars *vars);
 
 void 	draw_minimap(t_vars *vars);
 void 	draw_player(t_vars *vars);
