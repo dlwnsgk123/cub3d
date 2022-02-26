@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:52:22 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 22:56:41 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 19:39:01 by seungiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,20 @@ int	check_edge(t_vars *vars, int new_mapx, int new_mapy)
 	{	
 		if (vars->map.mapdata[old_mapy][old_mapx + dx] == '1'\
 				&& vars->map.mapdata[old_mapy + dy][old_mapx] == '1')
-		return (1);
+			return (1);
 	}
 	return (0);
 }
 
 int	is_wall(t_vars *vars, double check_x, double check_y)
 {
-
 	int	new_mapx;
 	int	new_mapy;
-	
+
 	new_mapx = (int)floor(check_x / TILE_SIZE);
 	new_mapy = (int)floor(check_y / TILE_SIZE);
-	if (new_mapx > vars->map.x || new_mapx < 0 
-		|| new_mapy > vars->map.y - 1 || new_mapy < 0)
+	if (new_mapx > vars->map.x || new_mapx < 0 \
+			|| new_mapy > vars->map.y - 1 || new_mapy < 0)
 		return (1);
 	if (check_edge(vars, new_mapx, new_mapy))
 		return (1);
@@ -57,9 +56,9 @@ void	move_up(t_vars *vars)
 
 	new_x = vars->player.px + (cos(vars->player.pa) * TILE_SIZE * 0.1);
 	new_y = vars->player.py + (sin(vars->player.pa) * TILE_SIZE * 0.1);
-	if (!is_wall(vars
-		, vars->player.px + vars->player.pdx
-		, vars->player.py + vars->player.pdy))
+	if (!is_wall(vars, \
+			vars->player.px + vars->player.pdx, \
+			vars->player.py + vars->player.pdy))
 	{
 		vars->player.px = new_x;
 		vars->player.py = new_y;
@@ -73,9 +72,9 @@ void	move_down(t_vars *vars)
 
 	new_x = vars->player.px - cos(vars->player.pa) * TILE_SIZE * 0.1;
 	new_y = vars->player.py - sin(vars->player.pa) * TILE_SIZE * 0.1;
-	if (!is_wall(vars
-		, vars->player.px - vars->player.pdx
-		, vars->player.py - vars->player.pdy))
+	if (!is_wall(vars, \
+			vars->player.px - vars->player.pdx, \
+			vars->player.py - vars->player.pdy))
 	{
 		vars->player.px = new_x;
 		vars->player.py = new_y;
@@ -89,9 +88,9 @@ void	move_left(t_vars *vars)
 
 	new_x = vars->player.px + sin(vars->player.pa) * TILE_SIZE * 0.1;
 	new_y = vars->player.py - cos(vars->player.pa) * TILE_SIZE * 0.1;
-	if (!is_wall(vars
-		, vars->player.px + vars->player.pdy
-		, vars->player.py - vars->player.pdx))
+	if (!is_wall(vars, \
+			vars->player.px + vars->player.pdy, \
+			vars->player.py - vars->player.pdx))
 	{
 		vars->player.px = new_x;
 		vars->player.py = new_y;

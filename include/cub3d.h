@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d                                              :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/25 04:49:15 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:02:39 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include "../mlx/mlx.h"
 # include <stdio.h>
@@ -28,20 +28,21 @@
 # define KEY_ESC 53
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
-# define MINIMAP_WIDTH	WINDOW_WIDTH
-# define MINIMAP_HEIGHT	WINDOW_HEIGHT
-# define FOV_ANGLE		1.0471975512
-# define PI				3.14159265358979323846	
-# define PI_2			1.57079632679489661923
-# define PI_4			0.78539816339744830962
+# define FOV_ANGLE			1.0471975512
+# define DIST_PROJ_PLANE	(WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2)
+# define PI					3.14159265358979323846	
+# define PI_2				1.57079632679489661923
+# define PI_4				0.78539816339744830962
+# define TWO_PI 			6.28318530717958647692
+# define TILE_SIZE 			64
 
 typedef struct s_player
 {
-	float	px;
-	float	py;
-	float	pdx;
-	float	pdy;
-	float	pa;
+	double	px;
+	double	py;
+	double	pdx;
+	double	pdy;
+	double	pa;
 }				t_player;
 
 typedef struct s_key
@@ -67,34 +68,50 @@ typedef struct s_p
 	int	y;
 }				t_p;
 
-typedef struct s_mpl
-{
-	double	dy;
-	double	ddy;
-	double	dx;
-	double	ddx;
-	double	dv;
-	double	incx;
-	double	incy;
-	double	error;
-	double	errorprev;
-}	t_mpl;
-
 typedef struct s_point
 {
 	double	x;
 	double	y;
 }	t_point;
 
+typedef struct	s_render
+{
+	int		width;
+	int		wall_start;
+	int		wall_end;
+	int		y;
+	double	wall_height;
+}	t_render;
+
+typedef struct s_ray_util
+{
+	int		found_wall_hit;
+	double	xintercept;
+	double	yintercept;
+	double	xstep;
+	double	ystep;
+	double	wall_hitx;
+	double	wall_hity;
+	double	distance;
+	int 	facing_down;
+	int		facing_up;
+	int		facing_right;
+	int		facing_left;
+}				t_ray_util;
+
 typedef struct s_ray
 {
-	t_mpl	v;
-	t_point	pos;	//플레이어가 바라보는 방향
-	t_point	s_dir;	//scale이 적용된 hit 위치
-	t_point m_dir;	//벽에 hit한 위치
-	t_point	prev_dir;
-	int	hit;		//hit한 방향 4:N, 3:S, 2:E, 1:W
-}	t_ray;
+	double		hitx;
+	double		hity;
+	double		dist;
+	double		ra;
+	int			hit_v;
+	int 		facing_down;
+	int			facing_up;
+	int			facing_right;
+	int			facing_left;
+	int			wall_dir;
+} t_ray;
 
 typedef struct s_img
 {
@@ -117,7 +134,7 @@ typedef struct s_vars
 	t_img		texture[4];
 	int 		f_color;
 	int 		c_color;
-	t_map		 map;
+	t_map		map;
 	t_player	player;
 	int 		tile_size;
 } 				t_vars;
@@ -127,7 +144,6 @@ void	parse(char *filename, t_vars *vars);
 void 	map_wall_check(t_vars *vars);
 void	parse_map(t_vars *vars);
 void	malloc_mapdata(t_vars *vars);
-void	set_tile_size(t_vars *vars);
 void	get_map_x_y(int skip_line, char *filename, t_vars *vars);
 
 int		tmp_len(char **tmp);
@@ -135,7 +151,7 @@ void	check_extension(char *filename);
 void 	split_free(char **str);
 
 void	set_map(int skip_line, char *filename, t_vars *vars);
-void 	get_map_x_y(int skip_line, char *filename, t_vars *vars);
+void 	set_map_x_y(int skip_line, char *filename, t_vars *vars);
 
 void 	draw_minimap(t_vars *vars);
 void 	draw_player(t_vars *vars);
@@ -148,7 +164,7 @@ void	move_left(t_vars *vars);
 void	move_right(t_vars *vars);
 void	rotate_left(t_vars *vars);
 void 	rotate_right(t_vars *vars);
-int		is_wall(t_vars *vars, float new_px, float new_py);
+int		is_wall(t_vars *vars, double new_px, double new_py);
 int		check_edge(t_vars *vars, int new_mapx, int new_mapy);
 
 
@@ -156,7 +172,16 @@ int		close_window(void);
 void	draw(t_vars *vars);
 
 void	draw_image_test(t_vars *vars);
-void	ray_draw(t_vars *data);
-void	draw_line(t_vars *vars, t_p start, t_p end);
 void	draw_pixel(t_img *img, int x, int y, int color);
+
+void	raycast(t_vars *vars, t_ray *ray, double ra);
+
+double	normalize_angle(double angle);
+int		get_wall_dir(t_vars *vars, t_ray *ray);
+double	get_distance(t_vars *vars, t_ray_util *hv);
+void	rayfacing_init(t_ray *ray, double ra);
+void	ray_draw(t_vars *data);
+
+void	draw_wall(t_vars *vars, t_ray ray, int ray_index);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:07:31 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 14:29:29 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 20:45:15 by seungiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	check_row_line(t_vars *vars, char *line)
 {
-	int	i;
-	int	len;
-	char *tmp;
+	int		i;
+	int		len;
+	char	*tmp;
 
 	tmp = ft_strtrim_back(line, " ");
 	len = ft_strlen(tmp);
@@ -32,8 +32,9 @@ void	check_row_line(t_vars *vars, char *line)
 	}
 	while (i < len)
 	{
-		if ((ft_strchr("NESW0", line[i]) && (line[i + 1] == ' ' || line[i + 1] == '\0'))
-			|| (line[i] == ' ' && ft_strchr("NESW0", line[i + 1])))
+		if ((ft_strchr("NESW0", line[i]) && \
+				(line[i + 1] == ' ' || line[i + 1] == '\0')) || \
+				(line[i] == ' ' && ft_strchr("NESW0", line[i + 1])))
 			put_error("wall error3");
 		i++;
 	}
@@ -45,8 +46,8 @@ void	check_col_line(t_vars *vars, char **map)
 	int	x;
 	int	y;
 
-	x = 0;
-	while (x < vars->map.x)
+	x = -1;
+	while (++x < vars->map.x)
 	{
 		y = 0;
 		if (ft_strchr("NESW0", map[y][x]))
@@ -60,19 +61,18 @@ void	check_col_line(t_vars *vars, char **map)
 		}
 		while (y < vars->map.y - 1)
 		{
-			if ((ft_strchr("NESW0", map[y][x]) && (map[y + 1][x] == ' ' || map[y + 1] == NULL))
-				|| (map[y][x] == ' ' && ft_strchr("NESW0", map[y + 1][x])))
+			if ((ft_strchr("NESW0", map[y][x]) && \
+					(map[y + 1][x] == ' ' || map[y + 1] == NULL)) || \
+					(map[y][x] == ' ' && ft_strchr("NESW0", map[y + 1][x])))
 				put_error("wall error6");
 			y++;
 		}
-		x++;
 	}
 }
 
 void	map_wall_check(t_vars *vars)
 {
 	char	**map;
-	int		x;
 	int		y;
 
 	map = vars->map.mapdata;

@@ -6,11 +6,11 @@
 #    By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/08 09:38:37 by junhalee          #+#    #+#              #
-#    Updated: 2021/10/08 09:38:37 by junhalee         ###   ########.fr        #
+#    Updated: 2022/02/26 20:41:31 by seungiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 SRCS =  src/main.c \
 		src/parse.c \
@@ -22,10 +22,12 @@ SRCS =  src/main.c \
 		src/move_player.c \
 		src/move_player2.c \
 		src/raycast.c \
+		src/raycast2.c \
+		src/texture.c \
 
 CC = gcc
 
-CFLAGS = #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 
 LEAKFLAGS = 
 

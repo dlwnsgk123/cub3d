@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 06:41:50 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:01:44 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,19 @@ int	set_color(char *color_info)
 {
 	int		color;
 	char	**tmp;
+	int		r;
+	int		g;
+	int		b;
 
 	tmp = ft_split(color_info, ',');
 	if (tmp_len(tmp) != 3)
-		put_error("color error");
-	color = (ft_atoi(tmp[0]) * 256 * 256) + \
-			(ft_atoi(tmp[1]) * 256) + ft_atoi(tmp[2]);
+		put_error("color error1");
+	r = ft_atoi(tmp[0]);
+	g = ft_atoi(tmp[1]);
+	b = ft_atoi(tmp[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		put_error("color error2");
+	color = (r << 16) + (g << 8) + b;
 	split_free(tmp);
 	return (color);
 }
@@ -40,8 +47,6 @@ int	set_color(char *color_info)
 void	get_info(char *line, t_vars *vars)
 {
 	char	**tmp;
-	int		width;
-	int		height;
 
 	tmp = ft_split(line, ' ');
 	if (ft_strcmp(tmp[0], "NO") == 0)
@@ -90,12 +95,46 @@ int	set_info(char *filename, t_vars *vars)
 	return (skip_line);
 }
 
+void	check_multi_map(int	skip_line, char *filename)
+{
+	int		fd;
+	int		map_end;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		put_error("map open error");
+	while (skip_line--)
+	{
+		get_next_line(fd, &line);
+		free(line);
+	}
+	get_next_line(fd, &line);
+	while (*line == '\0')
+	{
+		free(line);
+		get_next_line(fd, &line);
+	}
+	free(line);
+	while (get_next_line(fd, &line))
+	{
+		if (map_end == 1)
+			put_error("multi map error");
+		if (*line == '\0')
+			map_end = 1;
+		free(line);
+	}
+	free(line);
+	close(fd);
+}
+
 void	parse(char *filename, t_vars *vars)
 {
 	int	skip_line;
 
 	check_extension(filename);
 	skip_line = set_info(filename, vars);
+	check_multi_map(skip_line, filename);
 	set_map_x_y(skip_line, filename, vars);
 	malloc_mapdata(vars);
 	set_map(skip_line, filename, vars);

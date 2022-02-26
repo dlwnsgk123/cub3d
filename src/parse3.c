@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:11:38 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 14:18:11 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 19:42:19 by seungiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	malloc_mapdata(t_vars *vars)
 
 void	set_player_info(t_vars *vars, int	x, int y)
 {
-	char c;
+	char	c;
 
 	c = vars->map.mapdata[y][x];
 	if (c == 'N')
