@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:07:31 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 20:45:15 by seungiki         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:31:24 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,37 @@ void	map_wall_check(t_vars *vars)
 		check_row_line(vars, map[y]);
 		y++;
 	}
+}
+
+void	check_multi_map(int	skip_line, char *filename)
+{
+	int		fd;
+	int		map_end;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		put_error("map open error");
+	while (skip_line--)
+	{
+		get_next_line(fd, &line);
+		free(line);
+	}
+	get_next_line(fd, &line);
+	while (*line == '\0')
+	{
+		free(line);
+		get_next_line(fd, &line);
+	}
+	free(line);
+	while (get_next_line(fd, &line))
+	{
+		if (map_end == 1)
+			put_error("multi map error");
+		if (*line == '\0')
+			map_end = 1;
+		free(line);
+	}
+	free(line);
+	close(fd);
 }

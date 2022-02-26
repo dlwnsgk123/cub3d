@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:01:44 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:31:19 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,39 +93,6 @@ int	set_info(char *filename, t_vars *vars)
 	free(line);
 	close(fd);
 	return (skip_line);
-}
-
-void	check_multi_map(int	skip_line, char *filename)
-{
-	int		fd;
-	int		map_end;
-	char	*line;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		put_error("map open error");
-	while (skip_line--)
-	{
-		get_next_line(fd, &line);
-		free(line);
-	}
-	get_next_line(fd, &line);
-	while (*line == '\0')
-	{
-		free(line);
-		get_next_line(fd, &line);
-	}
-	free(line);
-	while (get_next_line(fd, &line))
-	{
-		if (map_end == 1)
-			put_error("multi map error");
-		if (*line == '\0')
-			map_end = 1;
-		free(line);
-	}
-	free(line);
-	close(fd);
 }
 
 void	parse(char *filename, t_vars *vars)

@@ -23,7 +23,7 @@ SRCS =  src/main.c \
 		src/move_player2.c \
 		src/raycast.c \
 		src/raycast2.c \
-		src/texture.c \
+		src/draw.c \
 
 CC = gcc
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture.c                                          :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungiki <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:54:02 by seungiki          #+#    #+#             */
-/*   Updated: 2022/02/26 19:35:50 by seungiki         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:42:17 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static int	get_texture_color(t_vars *vars, t_ray ray, t_render r, int y_point)
 static void	render_init(t_render *r, t_ray ray, t_vars *vars)
 {
 	ray.dist *= cos(ray.ra - vars->player.pa);
-	r->wall_height = TILE_SIZE / ray.dist * DIST_PROJ_PLANE;
+	r->wall_height = TILE_SIZE / ray.dist
+		* ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2));
 	r->wall_start = (WINDOW_HEIGHT / 2) - (r->wall_height / 2);
 	if (r->wall_start < 0)
 		r->wall_start = 0;
