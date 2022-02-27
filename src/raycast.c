@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:26 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 20:34:05 by seungiki         ###   ########.fr       */
+/*   Updated: 2022/02/27 15:49:12 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static void	vert_check(t_vars *vars, t_ray *ray, t_ray_util *v, double ra)
 		&& next.y >= 0 && next.y <= vars->map.y * TILE_SIZE)
 	{
 		if (ray->facing_left == 1)
-			check.x = next.x - 1;
+			check.x = next.x - 0.0001;
 		else
-			check.x = next.x + 1;
+			check.x = next.x + 0.0001;
 		check.y = next.y;
 		if (is_wall(vars, check.x, check.y))
 		{
@@ -98,9 +98,9 @@ static void	check_horz(t_vars *vars, t_ray *ray, t_ray_util *h, double ra)
 	{
 		check.x = next.x;
 		if (ray->facing_up == 1)
-			check.y = next.y - 1;
+			check.y = next.y - 0.0001;
 		else
-			check.y = next.y + 1;
+			check.y = next.y + 0.0001;
 		if (is_wall(vars, check.x, check.y))
 		{
 			h->found_wall_hit = 1;

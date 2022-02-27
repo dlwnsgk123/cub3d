@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/27 15:24:30 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 16:01:38 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define KEY_ESC 			65307
 # define KEY_LEFT 			65361
 # define KEY_RIGHT 			65363
-# define WINDOW_WIDTH		1280
-# define WINDOW_HEIGHT		768
+# define WINDOW_WIDTH		720
+# define WINDOW_HEIGHT		1280
 # define FOV_ANGLE			1.0471975512
 # define PI					3.14159265358979323846	
 # define PI_2				1.57079632679489661923
