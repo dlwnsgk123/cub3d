@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:07:31 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:48:23 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 09:43:36 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	map_prev_skip(int fd, int skip_line, char *line)
 	}
 }
 
-void	check_multi_map(int	skip_line, char *filename)
+void	check_multi_map(int skip_line, char *filename)
 {
 	int		fd;
 	int		map_end;

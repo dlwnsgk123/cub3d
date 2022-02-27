@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 03:10:05 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:55:12 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 09:45:33 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	tmp_isnum(char **tmp)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	while (tmp[i])
 	{
 		j = 0;
-		while(tmp[i][j])
+		while (tmp[i][j])
 		{
 			if (!ft_isdigit(tmp[i][j]))
 				put_error("color error");

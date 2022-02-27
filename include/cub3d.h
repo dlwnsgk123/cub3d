@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:55:52 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 09:47:39 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # define PI_4				0.78539816339744830962
 # define TWO_PI 			6.28318530717958647692
 # define TILE_SIZE 			64
+# define NO					0
+# define SO					1
+# define EA					2
+# define WE					3
 
 typedef struct s_player
 {
@@ -133,7 +137,7 @@ void	map_wall_check(t_vars *vars);
 void	parse_map(t_vars *vars);
 void	malloc_mapdata(t_vars *vars);
 void	get_map_x_y(int skip_line, char *filename, t_vars *vars);
-void	check_multi_map(int	skip_line, char *filename);
+void	check_multi_map(int skip_line, char *filename);
 void	tmp_isnum(char **tmp);
 
 int		tmp_len(char **tmp);

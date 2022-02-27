@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 09:38:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/26 21:57:02 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 01:35:29 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	get_info(char *line, t_vars *vars)
 
 	tmp = ft_split(line, ' ');
 	if (ft_strcmp(tmp[0], "NO") == 0)
-		set_img(&vars->texture[0], vars, tmp[1]);
+		set_img(&vars->texture[NO], vars, tmp[1]);
 	else if (ft_strcmp(tmp[0], "SO") == 0)
-		set_img(&vars->texture[1], vars, tmp[1]);
+		set_img(&vars->texture[SO], vars, tmp[1]);
 	else if (ft_strcmp(tmp[0], "EA") == 0)
-		set_img(&vars->texture[2], vars, tmp[1]);
+		set_img(&vars->texture[EA], vars, tmp[1]);
 	else if (ft_strcmp(tmp[0], "WE") == 0)
-		set_img(&vars->texture[3], vars, tmp[1]);
+		set_img(&vars->texture[WE], vars, tmp[1]);
 	else if (ft_strcmp(tmp[0], "F") == 0)
 		vars->f_color = set_color(tmp[1]);
 	else if (ft_strcmp(tmp[0], "C") == 0)

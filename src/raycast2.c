@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungiki <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 19:13:06 by seungiki          #+#    #+#             */
-/*   Updated: 2022/02/26 20:46:05 by seungiki         ###   ########.fr       */
+/*   Updated: 2022/02/27 09:46:50 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ int	get_wall_dir(t_vars *vars, t_ray *ray)
 	if (!ray->hit_v)
 	{
 		if (vars->player.py - ray->hity > 0)
-			return (0);
+			return (SO);
 		else if (vars->player.py - ray->hity < 0)
-			return (1);
+			return (NO);
 	}
 	else
 	{
 		if (vars->player.px - ray->hitx > 0)
-			return (2);
+			return (EA);
 		else if (vars->player.px - ray->hitx < 0)
-			return (3);
+			return (WE);
 	}
 	return (5);
 }
@@ -55,7 +55,7 @@ double	get_distance(t_vars *vars, t_ray_util *hv)
 		dist = sqrt(((hv->wall_hitx - vars->player.px) * \
 					(hv->wall_hitx - vars->player.px)) + \
 				((hv->wall_hity - vars->player.py) * \
-				 (hv->wall_hity - vars->player.py)));
+				(hv->wall_hity - vars->player.py)));
 	}
 	else
 		dist = 9223372036854775807;
@@ -64,9 +64,9 @@ double	get_distance(t_vars *vars, t_ray_util *hv)
 
 void	rayfacing_init(t_ray *ray, double ra)
 {
-	ray->facing_down = ra > 0 && ra < PI;
+	ray->facing_down = (ra > 0 && ra < PI);
 	ray->facing_up = !ray->facing_down;
-	ray->facing_right = ra < 0.5 * PI || ra > 1.5 * PI;
+	ray->facing_right = (ra < 0.5 * PI || ra > 1.5 * PI);
 	ray->facing_left = !ray->facing_right;
 }
 

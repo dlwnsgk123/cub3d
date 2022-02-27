@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 	vars.mlx = mlx_init();
 	parse(argv[1], &vars);
 	init(&vars);
-	vars.win = mlx_new_window(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
+	vars.win = mlx_new_window(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	vars.screen.ptr = mlx_new_image(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	vars.screen.data = (int *)mlx_get_data_addr(vars.screen.ptr, \
 			&vars.screen.bpp, &vars.screen.size_line, &vars.screen.endian);
