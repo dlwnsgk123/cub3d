@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:54:02 by seungiki          #+#    #+#             */
-/*   Updated: 2022/02/26 21:42:17 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 15:23:08 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ static int	get_texture_color(t_vars *vars, t_ray ray, t_render r, int y_point)
 	tex_type = ray.wall_dir;
 	tex_width = vars->texture[tex_type].width;
 	if (ray.hit_v)
-		tex_x = (int)ray.hity % TILE_SIZE * \
-			(vars->texture[tex_type].width / TILE_SIZE);
+		tex_x = (fmod(ray.hity, TILE_SIZE) \
+			* (double)tex_width / TILE_SIZE);
 	else
-		tex_x = (int)ray.hitx % TILE_SIZE * \
-			(vars->texture[tex_type].width / TILE_SIZE);
-	distance_from_top = y_point + r.wall_start - (WINDOW_HEIGHT / 2) + \
-		(r.wall_height / 2);
+		tex_x = (fmod(ray.hitx, TILE_SIZE) \
+			* (double)tex_width / TILE_SIZE);
+	distance_from_top = y_point + r.wall_start
+		- (WINDOW_HEIGHT / 2) + (r.wall_height / 2);
 	tex_y = distance_from_top * \
-		(vars->texture[tex_type].height / r.wall_height) * \
-		(vars->texture[tex_type].height / TILE_SIZE);
+			((double)vars->texture[tex_type].height / r.wall_height);
 	return (vars->texture[tex_type].data[tex_y * tex_width + tex_x]);
 }
 
