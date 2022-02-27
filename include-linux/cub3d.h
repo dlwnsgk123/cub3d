@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/27 16:01:38 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 20:12:37 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ typedef struct s_vars
 
 void	put_error(char *str);
 void	parse(char *filename, t_vars *vars);
+void	parse_init(t_vars *vars);
+void	check_info(t_vars *vars);
 void	map_wall_check(t_vars *vars);
 void	parse_map(t_vars *vars);
 void	malloc_mapdata(t_vars *vars);

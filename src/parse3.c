@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:11:38 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/27 09:44:17 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 19:04:22 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	parse_map(t_vars *vars)
 				put_error("map data error : not allowed data");
 			if (ft_strchr("NESW", mapdata[y][x]))
 			{
-				if (flag++ > 1)
+				if (flag++ > 0)
 					put_error("mapdata error : too many player");
 				set_player_info(vars, x, y);
 			}

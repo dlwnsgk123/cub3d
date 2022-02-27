@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:54:02 by seungiki          #+#    #+#             */
-/*   Updated: 2022/02/27 15:23:08 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:44:35 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	get_texture_color(t_vars *vars, t_ray ray, t_render r, int y_point)
 static void	render_init(t_render *r, t_ray ray, t_vars *vars)
 {
 	ray.dist *= cos(ray.ra - vars->player.pa);
-	r->wall_height = TILE_SIZE / ray.dist
+	r->wall_height = (TILE_SIZE / ray.dist)
 		* ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2));
 	r->wall_start = (WINDOW_HEIGHT / 2) - (r->wall_height / 2);
 	if (r->wall_start < 0)

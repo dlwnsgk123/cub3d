@@ -27,9 +27,7 @@ SRCS =  src/main.c \
 
 CC = gcc
 
-CFLAGS = #-Wall -Werror -Wextra
-
-LEAKFLAGS = 
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address
 
 OBJ = $(SRCS:.c=.o)
 

@@ -16,18 +16,16 @@ static void	draw_f_c(t_vars *data)
 {
 	int	i;
 	int	j;
-	int	y;
 
-	y = data->screen.size_line;
 	i = 0;
 	while (i < WINDOW_HEIGHT)
 	{
 		j = 0;
 		while (j < WINDOW_WIDTH)
 		{
-			data->screen.data[(i * y) + j] = data->c_color;
-			data->screen.data[((WINDOW_HEIGHT - i - 1) * y) + j] = \
-				data->f_color;
+			data->screen.data[(i * WINDOW_WIDTH) + j] = data->f_color;
+			data->screen.data[((WINDOW_HEIGHT - i - 1) * WINDOW_WIDTH) + j] = \
+			data->c_color;
 			j++;
 		}
 		i++;
@@ -84,7 +82,6 @@ int	main(int argc, char **argv)
 	vars.screen.ptr = mlx_new_image(vars.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	vars.screen.data = (int *)mlx_get_data_addr(vars.screen.ptr, \
 			&vars.screen.bpp, &vars.screen.size_line, &vars.screen.endian);
-	vars.screen.size_line = vars.screen.size_line / 4;
 	draw(&vars);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, keyrelease, &vars);

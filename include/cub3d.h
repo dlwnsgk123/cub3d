@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 12:31:12 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/27 09:47:39 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 20:12:20 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define CUB3D_H
 
 # include "../mlx/mlx.h"
+# include "../Libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include "../Libft/libft.h"
 
 # define KEY_W				13
 # define KEY_A				0
@@ -29,7 +29,7 @@
 # define WINDOW_WIDTH		1280
 # define WINDOW_HEIGHT		720
 # define FOV_ANGLE			1.0471975512
-# define PI					3.14159265358979323846	
+# define PI					3.14159265358979323846
 # define PI_2				1.57079632679489661923
 # define PI_4				0.78539816339744830962
 # define TWO_PI 			6.28318530717958647692
@@ -133,6 +133,8 @@ typedef struct s_vars
 
 void	put_error(char *str);
 void	parse(char *filename, t_vars *vars);
+void	parse_init(t_vars *vars);
+void	check_info(t_vars *vars);
 void	map_wall_check(t_vars *vars);
 void	parse_map(t_vars *vars);
 void	malloc_mapdata(t_vars *vars);

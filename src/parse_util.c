@@ -6,7 +6,7 @@
 /*   By: junhalee <junhalee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 03:10:05 by junhalee          #+#    #+#             */
-/*   Updated: 2022/02/27 09:45:33 by junhalee         ###   ########.fr       */
+/*   Updated: 2022/02/27 20:11:53 by junhalee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,23 @@ int	tmp_len(char **tmp)
 	return (i);
 }
 
-void	check_extension(char *filename)
+void	parse_init(t_vars *vars)
 {
-	int		len;
-	char	*ext;
+	vars->texture[0].ptr = NULL;
+	vars->texture[1].ptr = NULL;
+	vars->texture[2].ptr = NULL;
+	vars->texture[3].ptr = NULL;
+	vars->c_color = -1;
+	vars->f_color = -1;
+}
 
-	len = ft_strlen(filename);
-	if (len < 5)
-		put_error("file extension error");
-	ext = &filename[len - 4];
-	if (ft_strncmp(ext, ".cub", 4) != 0)
-		put_error("file extension error");
+void	check_info(t_vars *vars)
+{
+	if (vars->c_color == -1 || vars->f_color == -1 )
+		put_error("parse error : no info");
+	if (vars->texture[0].ptr == NULL
+		|| vars->texture[1].ptr == NULL
+		|| vars->texture[2].ptr == NULL
+		|| vars->texture[3].ptr == NULL)
+		put_error("parse error : no info");
 }
